@@ -1,5 +1,5 @@
 <div align="center">
-<img src="README/squeezedet_pytorch.gif" width="960">
+<img src="README/squeezedet_pytorch.gif" width="860">
 </div>
 
 
