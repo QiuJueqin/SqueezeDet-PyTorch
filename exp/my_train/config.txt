@@ -1,0 +1,60 @@
+torch version: 1.1.0
+cudnn version: 7501
+cmd: ['main.py']
+
+config:
+anchors: [[   8.    8.   34.   30.]
+ [   8.    8.   75.   45.]
+ [   8.    8.   38.   90.]
+ ...
+ [1240.  376.  194.  178.]
+ [1240.  376.  283.  156.]
+ [1240.  376.  381.  185.]]
+anchors_per_grid: 9
+arch: squeezedet
+batch_size: 16
+bbox_loss_weight: 6.0
+chunk_sizes: [16]
+class_loss_weight: 1.0
+class_names: ('Car', 'Pedestrian', 'Cyclist')
+data_dir: /home/qiujueqin/PycharmProjects/squeezedet/data
+dataset: kitti
+debug: 0
+debug_dir: /home/qiujueqin/PycharmProjects/squeezedet/exp/my_train/debug
+device: cuda
+drift_prob: 1.0
+dropout_prob: 0.5
+exp_dir: /home/qiujueqin/PycharmProjects/squeezedet/exp
+exp_id: my_train
+flip_prob: 0.5
+forbid_resize: False
+gpus: [0]
+gpus_str: 0
+grad_norm: 5.0
+input_size: (384, 1248)
+keep_top_k: 64
+load_model: ../models/imagenet/squeezenet1_1-f364aa15.pth
+lr: 0.01
+master_batch_size: 16
+mode: train
+momentum: 0.9
+negative_score_loss_weight: 100.0
+nms_thresh: 0.4
+no_eval: False
+not_cuda_benchmark: False
+num_anchors: 16848
+num_classes: 3
+num_epochs: 300
+num_iters: -1
+num_workers: 4
+positive_score_loss_weight: 3.75
+print_interval: 10
+rgb_mean: [[[93.877 98.801 95.923]]]
+rgb_std: [[[78.782 80.13  81.2  ]]]
+root_dir: /home/qiujueqin/PycharmProjects/squeezedet
+save_dir: /home/qiujueqin/PycharmProjects/squeezedet/exp/my_train
+save_intervals: 1
+score_thresh: 0.3
+seed: 42
+val_intervals: 5
+weight_decay: 0.0001

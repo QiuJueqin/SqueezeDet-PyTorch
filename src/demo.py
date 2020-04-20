@@ -16,10 +16,9 @@ from utils.model import load_model
 
 def demo(cfg):
     # prepare configurations
-    cfg.load_model = '../models/squeezedet_kitti_epoch290.pth'
+    cfg.load_model = '../models/squeezedet_kitti_epoch280.pth'
     cfg.gpus = [-1]  # -1 to use CPU
     cfg.debug = 2  # to visualize detection boxes
-    cfg.exp_id = 'my_demo'
     dataset = KITTI('val', cfg)
     cfg = Config().update_dataset_info(cfg, dataset)
 

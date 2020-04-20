@@ -1,0 +1,420 @@
+2020-04-19-22-40: epoch 1:  train | loss 4.520 | class_loss 0.460 | score_loss 1.328 | bbox_loss 2.732 | epoch_time 2.06min 
+2020-04-19-22-42: epoch 2:  train | loss 1.968 | class_loss 0.329 | score_loss 0.520 | bbox_loss 1.119 | epoch_time 1.66min 
+2020-04-19-22-44: epoch 3:  train | loss 1.702 | class_loss 0.276 | score_loss 0.472 | bbox_loss 0.953 | epoch_time 1.67min 
+2020-04-19-22-45: epoch 4:  train | loss 1.568 | class_loss 0.251 | score_loss 0.447 | bbox_loss 0.870 | epoch_time 1.66min 
+2020-04-19-22-47: epoch 5:  train | loss 1.430 | class_loss 0.234 | score_loss 0.415 | bbox_loss 0.781 | epoch_time 1.64min 
+2020-04-19-22-49: epoch 5:  val   | loss 1.230 | class_loss 0.208 | score_loss 0.374 | bbox_loss 0.648 | epoch_time 1.86min 
+2020-04-19-22-51: epoch 5:  val   | Car_easy 0.186 | Car_moderate 0.193 | Car_hard 0.165 | Pedestrian_easy 0.006 | Pedestrian_moderate 0.007 | Pedestrian_hard 0.007 | Cyclist_easy 0.000 | Cyclist_moderate 0.000 | Cyclist_hard 0.000 | mAP 0.063 
+2020-04-19-22-53: epoch 6:  train | loss 1.351 | class_loss 0.224 | score_loss 0.386 | bbox_loss 0.741 | epoch_time 1.64min 
+2020-04-19-22-54: epoch 7:  train | loss 1.255 | class_loss 0.209 | score_loss 0.358 | bbox_loss 0.688 | epoch_time 1.64min 
+2020-04-19-22-56: epoch 8:  train | loss 1.181 | class_loss 0.194 | score_loss 0.343 | bbox_loss 0.644 | epoch_time 1.64min 
+2020-04-19-22-58: epoch 9:  train | loss 1.117 | class_loss 0.183 | score_loss 0.321 | bbox_loss 0.613 | epoch_time 1.65min 
+2020-04-19-22-59: epoch 10: train | loss 1.064 | class_loss 0.171 | score_loss 0.309 | bbox_loss 0.583 | epoch_time 1.64min 
+2020-04-19-23-00: epoch 10: val   | loss 0.986 | class_loss 0.159 | score_loss 0.316 | bbox_loss 0.511 | epoch_time 0.67min 
+2020-04-19-23-02: epoch 10: val   | Car_easy 0.440 | Car_moderate 0.359 | Car_hard 0.299 | Pedestrian_easy 0.379 | Pedestrian_moderate 0.309 | Pedestrian_hard 0.287 | Cyclist_easy 0.000 | Cyclist_moderate 0.000 | Cyclist_hard 0.000 | mAP 0.230 
+2020-04-19-23-04: epoch 11: train | loss 0.992 | class_loss 0.158 | score_loss 0.292 | bbox_loss 0.543 | epoch_time 1.64min 
+2020-04-19-23-05: epoch 12: train | loss 0.951 | class_loss 0.149 | score_loss 0.282 | bbox_loss 0.520 | epoch_time 1.64min 
+2020-04-19-23-07: epoch 13: train | loss 0.943 | class_loss 0.145 | score_loss 0.286 | bbox_loss 0.512 | epoch_time 1.67min 
+2020-04-19-23-09: epoch 14: train | loss 0.909 | class_loss 0.137 | score_loss 0.274 | bbox_loss 0.499 | epoch_time 1.64min 
+2020-04-19-23-10: epoch 15: train | loss 0.889 | class_loss 0.131 | score_loss 0.274 | bbox_loss 0.484 | epoch_time 1.64min 
+2020-04-19-23-11: epoch 15: val   | loss 0.797 | class_loss 0.122 | score_loss 0.260 | bbox_loss 0.414 | epoch_time 0.67min 
+2020-04-19-23-13: epoch 15: val   | Car_easy 0.506 | Car_moderate 0.462 | Car_hard 0.375 | Pedestrian_easy 0.486 | Pedestrian_moderate 0.406 | Pedestrian_hard 0.371 | Cyclist_easy 0.139 | Cyclist_moderate 0.091 | Cyclist_hard 0.091 | mAP 0.325 
+2020-04-19-23-15: epoch 16: train | loss 0.845 | class_loss 0.121 | score_loss 0.266 | bbox_loss 0.458 | epoch_time 1.64min 
+2020-04-19-23-16: epoch 17: train | loss 0.840 | class_loss 0.117 | score_loss 0.263 | bbox_loss 0.460 | epoch_time 1.64min 
+2020-04-19-23-18: epoch 18: train | loss 0.826 | class_loss 0.111 | score_loss 0.260 | bbox_loss 0.455 | epoch_time 1.64min 
+2020-04-19-23-20: epoch 19: train | loss 0.794 | class_loss 0.105 | score_loss 0.254 | bbox_loss 0.435 | epoch_time 1.64min 
+2020-04-19-23-21: epoch 20: train | loss 0.761 | class_loss 0.098 | score_loss 0.250 | bbox_loss 0.414 | epoch_time 1.64min 
+2020-04-19-23-22: epoch 20: val   | loss 0.733 | class_loss 0.105 | score_loss 0.244 | bbox_loss 0.384 | epoch_time 0.68min 
+2020-04-19-23-24: epoch 20: val   | Car_easy 0.633 | Car_moderate 0.528 | Car_hard 0.442 | Pedestrian_easy 0.561 | Pedestrian_moderate 0.454 | Pedestrian_hard 0.422 | Cyclist_easy 0.245 | Cyclist_moderate 0.214 | Cyclist_hard 0.207 | mAP 0.412 
+2020-04-19-23-26: epoch 21: train | loss 0.749 | class_loss 0.093 | score_loss 0.244 | bbox_loss 0.412 | epoch_time 1.67min 
+2020-04-19-23-28: epoch 22: train | loss 0.752 | class_loss 0.094 | score_loss 0.243 | bbox_loss 0.415 | epoch_time 1.65min 
+2020-04-19-23-29: epoch 23: train | loss 0.743 | class_loss 0.093 | score_loss 0.239 | bbox_loss 0.411 | epoch_time 1.64min 
+2020-04-19-23-31: epoch 24: train | loss 0.715 | class_loss 0.084 | score_loss 0.236 | bbox_loss 0.396 | epoch_time 1.65min 
+2020-04-19-23-33: epoch 25: train | loss 0.686 | class_loss 0.077 | score_loss 0.229 | bbox_loss 0.380 | epoch_time 1.64min 
+2020-04-19-23-33: epoch 25: val   | loss 0.683 | class_loss 0.090 | score_loss 0.244 | bbox_loss 0.350 | epoch_time 0.67min 
+2020-04-19-23-35: epoch 25: val   | Car_easy 0.595 | Car_moderate 0.530 | Car_hard 0.449 | Pedestrian_easy 0.600 | Pedestrian_moderate 0.523 | Pedestrian_hard 0.465 | Cyclist_easy 0.197 | Cyclist_moderate 0.176 | Cyclist_hard 0.172 | mAP 0.412 
+2020-04-19-23-37: epoch 26: train | loss 0.686 | class_loss 0.078 | score_loss 0.232 | bbox_loss 0.376 | epoch_time 1.64min 
+2020-04-19-23-39: epoch 27: train | loss 0.688 | class_loss 0.074 | score_loss 0.232 | bbox_loss 0.382 | epoch_time 1.64min 
+2020-04-19-23-40: epoch 28: train | loss 0.667 | class_loss 0.072 | score_loss 0.226 | bbox_loss 0.369 | epoch_time 1.64min 
+2020-04-19-23-42: epoch 29: train | loss 0.650 | class_loss 0.067 | score_loss 0.223 | bbox_loss 0.360 | epoch_time 1.64min 
+2020-04-19-23-44: epoch 30: train | loss 0.645 | class_loss 0.065 | score_loss 0.220 | bbox_loss 0.360 | epoch_time 1.64min 
+2020-04-19-23-44: epoch 30: val   | loss 0.603 | class_loss 0.073 | score_loss 0.224 | bbox_loss 0.307 | epoch_time 0.65min 
+2020-04-19-23-46: epoch 30: val   | Car_easy 0.699 | Car_moderate 0.637 | Car_hard 0.543 | Pedestrian_easy 0.652 | Pedestrian_moderate 0.540 | Pedestrian_hard 0.506 | Cyclist_easy 0.344 | Cyclist_moderate 0.319 | Cyclist_hard 0.314 | mAP 0.506 
+2020-04-19-23-48: epoch 31: train | loss 0.640 | class_loss 0.063 | score_loss 0.221 | bbox_loss 0.355 | epoch_time 1.64min 
+2020-04-19-23-50: epoch 32: train | loss 0.620 | class_loss 0.059 | score_loss 0.213 | bbox_loss 0.348 | epoch_time 1.64min 
+2020-04-19-23-51: epoch 33: train | loss 0.624 | class_loss 0.060 | score_loss 0.214 | bbox_loss 0.350 | epoch_time 1.64min 
+2020-04-19-23-53: epoch 34: train | loss 0.611 | class_loss 0.057 | score_loss 0.213 | bbox_loss 0.340 | epoch_time 1.64min 
+2020-04-19-23-55: epoch 35: train | loss 0.599 | class_loss 0.053 | score_loss 0.211 | bbox_loss 0.335 | epoch_time 1.64min 
+2020-04-19-23-55: epoch 35: val   | loss 0.613 | class_loss 0.070 | score_loss 0.224 | bbox_loss 0.319 | epoch_time 0.65min 
+2020-04-19-23-57: epoch 35: val   | Car_easy 0.567 | Car_moderate 0.565 | Car_hard 0.473 | Pedestrian_easy 0.662 | Pedestrian_moderate 0.546 | Pedestrian_hard 0.513 | Cyclist_easy 0.356 | Cyclist_moderate 0.340 | Cyclist_hard 0.312 | mAP 0.481 
+2020-04-19-23-59: epoch 36: train | loss 0.585 | class_loss 0.052 | score_loss 0.208 | bbox_loss 0.325 | epoch_time 1.64min 
+2020-04-20-00-01: epoch 37: train | loss 0.588 | class_loss 0.054 | score_loss 0.208 | bbox_loss 0.326 | epoch_time 1.64min 
+2020-04-20-00-02: epoch 38: train | loss 0.572 | class_loss 0.049 | score_loss 0.203 | bbox_loss 0.321 | epoch_time 1.64min 
+2020-04-20-00-04: epoch 39: train | loss 0.574 | class_loss 0.048 | score_loss 0.203 | bbox_loss 0.323 | epoch_time 1.64min 
+2020-04-20-00-06: epoch 40: train | loss 0.554 | class_loss 0.046 | score_loss 0.197 | bbox_loss 0.311 | epoch_time 1.64min 
+2020-04-20-00-06: epoch 40: val   | loss 0.530 | class_loss 0.058 | score_loss 0.189 | bbox_loss 0.283 | epoch_time 0.67min 
+2020-04-20-00-08: epoch 40: val   | Car_easy 0.729 | Car_moderate 0.700 | Car_hard 0.601 | Pedestrian_easy 0.675 | Pedestrian_moderate 0.583 | Pedestrian_hard 0.519 | Cyclist_easy 0.356 | Cyclist_moderate 0.375 | Cyclist_hard 0.348 | mAP 0.543 
+2020-04-20-00-10: epoch 41: train | loss 0.547 | class_loss 0.042 | score_loss 0.199 | bbox_loss 0.305 | epoch_time 1.64min 
+2020-04-20-00-12: epoch 42: train | loss 0.536 | class_loss 0.041 | score_loss 0.195 | bbox_loss 0.300 | epoch_time 1.64min 
+2020-04-20-00-13: epoch 43: train | loss 0.525 | class_loss 0.040 | score_loss 0.195 | bbox_loss 0.291 | epoch_time 1.64min 
+2020-04-20-00-15: epoch 44: train | loss 0.530 | class_loss 0.040 | score_loss 0.194 | bbox_loss 0.296 | epoch_time 1.64min 
+2020-04-20-00-17: epoch 45: train | loss 0.529 | class_loss 0.041 | score_loss 0.194 | bbox_loss 0.294 | epoch_time 1.65min 
+2020-04-20-00-17: epoch 45: val   | loss 0.528 | class_loss 0.056 | score_loss 0.208 | bbox_loss 0.264 | epoch_time 0.66min 
+2020-04-20-00-20: epoch 45: val   | Car_easy 0.756 | Car_moderate 0.718 | Car_hard 0.604 | Pedestrian_easy 0.644 | Pedestrian_moderate 0.560 | Pedestrian_hard 0.529 | Cyclist_easy 0.501 | Cyclist_moderate 0.433 | Cyclist_hard 0.387 | mAP 0.570 
+2020-04-20-00-21: epoch 46: train | loss 0.526 | class_loss 0.039 | score_loss 0.196 | bbox_loss 0.291 | epoch_time 1.64min 
+2020-04-20-00-23: epoch 47: train | loss 0.516 | class_loss 0.039 | score_loss 0.190 | bbox_loss 0.287 | epoch_time 1.64min 
+2020-04-20-00-25: epoch 48: train | loss 0.517 | class_loss 0.039 | score_loss 0.190 | bbox_loss 0.288 | epoch_time 1.67min 
+2020-04-20-00-26: epoch 49: train | loss 0.519 | class_loss 0.037 | score_loss 0.192 | bbox_loss 0.289 | epoch_time 1.64min 
+2020-04-20-00-28: epoch 50: train | loss 0.508 | class_loss 0.037 | score_loss 0.189 | bbox_loss 0.282 | epoch_time 1.64min 
+2020-04-20-00-29: epoch 50: val   | loss 0.494 | class_loss 0.050 | score_loss 0.180 | bbox_loss 0.264 | epoch_time 0.66min 
+2020-04-20-00-31: epoch 50: val   | Car_easy 0.760 | Car_moderate 0.720 | Car_hard 0.613 | Pedestrian_easy 0.668 | Pedestrian_moderate 0.592 | Pedestrian_hard 0.550 | Cyclist_easy 0.480 | Cyclist_moderate 0.435 | Cyclist_hard 0.396 | mAP 0.579 
+2020-04-20-00-32: epoch 51: train | loss 0.506 | class_loss 0.034 | score_loss 0.186 | bbox_loss 0.286 | epoch_time 1.64min 
+2020-04-20-00-34: epoch 52: train | loss 0.486 | class_loss 0.033 | score_loss 0.185 | bbox_loss 0.268 | epoch_time 1.64min 
+2020-04-20-00-36: epoch 53: train | loss 0.483 | class_loss 0.031 | score_loss 0.183 | bbox_loss 0.269 | epoch_time 1.65min 
+2020-04-20-00-37: epoch 54: train | loss 0.490 | class_loss 0.035 | score_loss 0.185 | bbox_loss 0.271 | epoch_time 1.64min 
+2020-04-20-00-39: epoch 55: train | loss 0.467 | class_loss 0.029 | score_loss 0.179 | bbox_loss 0.259 | epoch_time 1.64min 
+2020-04-20-00-40: epoch 55: val   | loss 0.467 | class_loss 0.044 | score_loss 0.192 | bbox_loss 0.230 | epoch_time 0.68min 
+2020-04-20-00-42: epoch 55: val   | Car_easy 0.805 | Car_moderate 0.748 | Car_hard 0.656 | Pedestrian_easy 0.685 | Pedestrian_moderate 0.600 | Pedestrian_hard 0.536 | Cyclist_easy 0.695 | Cyclist_moderate 0.614 | Cyclist_hard 0.566 | mAP 0.656 
+2020-04-20-00-43: epoch 56: train | loss 0.479 | class_loss 0.032 | score_loss 0.182 | bbox_loss 0.265 | epoch_time 1.64min 
+2020-04-20-00-45: epoch 57: train | loss 0.477 | class_loss 0.031 | score_loss 0.180 | bbox_loss 0.266 | epoch_time 1.64min 
+2020-04-20-00-47: epoch 58: train | loss 0.469 | class_loss 0.030 | score_loss 0.179 | bbox_loss 0.261 | epoch_time 1.64min 
+2020-04-20-00-48: epoch 59: train | loss 0.468 | class_loss 0.031 | score_loss 0.179 | bbox_loss 0.258 | epoch_time 1.65min 
+2020-04-20-00-50: epoch 60: train | loss 0.458 | class_loss 0.028 | score_loss 0.177 | bbox_loss 0.252 | epoch_time 1.64min 
+2020-04-20-00-51: epoch 60: val   | loss 0.475 | class_loss 0.043 | score_loss 0.177 | bbox_loss 0.255 | epoch_time 0.66min 
+2020-04-20-00-53: epoch 60: val   | Car_easy 0.781 | Car_moderate 0.738 | Car_hard 0.640 | Pedestrian_easy 0.716 | Pedestrian_moderate 0.626 | Pedestrian_hard 0.555 | Cyclist_easy 0.552 | Cyclist_moderate 0.491 | Cyclist_hard 0.473 | mAP 0.619 
+2020-04-20-00-54: epoch 61: train | loss 0.410 | class_loss 0.021 | score_loss 0.165 | bbox_loss 0.223 | epoch_time 1.64min 
+2020-04-20-00-56: epoch 62: train | loss 0.396 | class_loss 0.020 | score_loss 0.163 | bbox_loss 0.212 | epoch_time 1.65min 
+2020-04-20-00-58: epoch 63: train | loss 0.386 | class_loss 0.020 | score_loss 0.158 | bbox_loss 0.208 | epoch_time 1.64min 
+2020-04-20-00-59: epoch 64: train | loss 0.382 | class_loss 0.019 | score_loss 0.156 | bbox_loss 0.206 | epoch_time 1.65min 
+2020-04-20-01-01: epoch 65: train | loss 0.384 | class_loss 0.020 | score_loss 0.157 | bbox_loss 0.206 | epoch_time 1.64min 
+2020-04-20-01-02: epoch 65: val   | loss 0.404 | class_loss 0.032 | score_loss 0.173 | bbox_loss 0.200 | epoch_time 0.67min 
+2020-04-20-01-04: epoch 65: val   | Car_easy 0.878 | Car_moderate 0.823 | Car_hard 0.685 | Pedestrian_easy 0.748 | Pedestrian_moderate 0.654 | Pedestrian_hard 0.620 | Cyclist_easy 0.752 | Cyclist_moderate 0.686 | Cyclist_hard 0.631 | mAP 0.720 
+2020-04-20-01-06: epoch 66: train | loss 0.385 | class_loss 0.019 | score_loss 0.159 | bbox_loss 0.207 | epoch_time 1.64min 
+2020-04-20-01-07: epoch 67: train | loss 0.377 | class_loss 0.019 | score_loss 0.156 | bbox_loss 0.202 | epoch_time 1.64min 
+2020-04-20-01-09: epoch 68: train | loss 0.372 | class_loss 0.017 | score_loss 0.157 | bbox_loss 0.198 | epoch_time 1.65min 
+2020-04-20-01-11: epoch 69: train | loss 0.373 | class_loss 0.017 | score_loss 0.157 | bbox_loss 0.199 | epoch_time 1.64min 
+2020-04-20-01-12: epoch 70: train | loss 0.375 | class_loss 0.019 | score_loss 0.154 | bbox_loss 0.201 | epoch_time 1.65min 
+2020-04-20-01-13: epoch 70: val   | loss 0.398 | class_loss 0.031 | score_loss 0.164 | bbox_loss 0.202 | epoch_time 0.68min 
+2020-04-20-01-15: epoch 70: val   | Car_easy 0.882 | Car_moderate 0.822 | Car_hard 0.691 | Pedestrian_easy 0.782 | Pedestrian_moderate 0.692 | Pedestrian_hard 0.628 | Cyclist_easy 0.699 | Cyclist_moderate 0.633 | Cyclist_hard 0.614 | mAP 0.716 
+2020-04-20-01-17: epoch 71: train | loss 0.365 | class_loss 0.017 | score_loss 0.154 | bbox_loss 0.195 | epoch_time 1.64min 
+2020-04-20-01-18: epoch 72: train | loss 0.363 | class_loss 0.017 | score_loss 0.152 | bbox_loss 0.193 | epoch_time 1.64min 
+2020-04-20-01-20: epoch 73: train | loss 0.361 | class_loss 0.016 | score_loss 0.151 | bbox_loss 0.194 | epoch_time 1.64min 
+2020-04-20-01-22: epoch 74: train | loss 0.362 | class_loss 0.015 | score_loss 0.152 | bbox_loss 0.195 | epoch_time 1.64min 
+2020-04-20-01-23: epoch 75: train | loss 0.359 | class_loss 0.015 | score_loss 0.152 | bbox_loss 0.191 | epoch_time 1.64min 
+2020-04-20-01-24: epoch 75: val   | loss 0.388 | class_loss 0.033 | score_loss 0.157 | bbox_loss 0.198 | epoch_time 0.68min 
+2020-04-20-01-26: epoch 75: val   | Car_easy 0.843 | Car_moderate 0.817 | Car_hard 0.687 | Pedestrian_easy 0.749 | Pedestrian_moderate 0.670 | Pedestrian_hard 0.612 | Cyclist_easy 0.694 | Cyclist_moderate 0.631 | Cyclist_hard 0.612 | mAP 0.702 
+2020-04-20-01-28: epoch 76: train | loss 0.356 | class_loss 0.016 | score_loss 0.151 | bbox_loss 0.190 | epoch_time 1.64min 
+2020-04-20-01-29: epoch 77: train | loss 0.350 | class_loss 0.014 | score_loss 0.149 | bbox_loss 0.186 | epoch_time 1.64min 
+2020-04-20-01-31: epoch 78: train | loss 0.352 | class_loss 0.015 | score_loss 0.149 | bbox_loss 0.189 | epoch_time 1.64min 
+2020-04-20-01-33: epoch 79: train | loss 0.347 | class_loss 0.014 | score_loss 0.148 | bbox_loss 0.185 | epoch_time 1.65min 
+2020-04-20-01-34: epoch 80: train | loss 0.346 | class_loss 0.014 | score_loss 0.148 | bbox_loss 0.184 | epoch_time 1.64min 
+2020-04-20-01-35: epoch 80: val   | loss 0.374 | class_loss 0.028 | score_loss 0.150 | bbox_loss 0.196 | epoch_time 0.65min 
+2020-04-20-01-37: epoch 80: val   | Car_easy 0.885 | Car_moderate 0.824 | Car_hard 0.736 | Pedestrian_easy 0.768 | Pedestrian_moderate 0.689 | Pedestrian_hard 0.632 | Cyclist_easy 0.796 | Cyclist_moderate 0.686 | Cyclist_hard 0.669 | mAP 0.743 
+2020-04-20-01-39: epoch 81: train | loss 0.351 | class_loss 0.015 | score_loss 0.151 | bbox_loss 0.185 | epoch_time 1.64min 
+2020-04-20-01-40: epoch 82: train | loss 0.347 | class_loss 0.014 | score_loss 0.149 | bbox_loss 0.184 | epoch_time 1.64min 
+2020-04-20-01-42: epoch 83: train | loss 0.347 | class_loss 0.014 | score_loss 0.147 | bbox_loss 0.186 | epoch_time 1.64min 
+2020-04-20-01-44: epoch 84: train | loss 0.348 | class_loss 0.015 | score_loss 0.150 | bbox_loss 0.183 | epoch_time 1.64min 
+2020-04-20-01-46: epoch 85: train | loss 0.343 | class_loss 0.013 | score_loss 0.147 | bbox_loss 0.183 | epoch_time 1.65min 
+2020-04-20-01-46: epoch 85: val   | loss 0.375 | class_loss 0.029 | score_loss 0.156 | bbox_loss 0.190 | epoch_time 0.68min 
+2020-04-20-01-48: epoch 85: val   | Car_easy 0.844 | Car_moderate 0.823 | Car_hard 0.688 | Pedestrian_easy 0.776 | Pedestrian_moderate 0.695 | Pedestrian_hard 0.633 | Cyclist_easy 0.770 | Cyclist_moderate 0.699 | Cyclist_hard 0.651 | mAP 0.731 
+2020-04-20-01-50: epoch 86: train | loss 0.339 | class_loss 0.013 | score_loss 0.144 | bbox_loss 0.181 | epoch_time 1.64min 
+2020-04-20-01-52: epoch 87: train | loss 0.341 | class_loss 0.014 | score_loss 0.145 | bbox_loss 0.183 | epoch_time 1.64min 
+2020-04-20-01-53: epoch 88: train | loss 0.335 | class_loss 0.012 | score_loss 0.144 | bbox_loss 0.178 | epoch_time 1.65min 
+2020-04-20-01-55: epoch 89: train | loss 0.338 | class_loss 0.013 | score_loss 0.146 | bbox_loss 0.179 | epoch_time 1.64min 
+2020-04-20-01-57: epoch 90: train | loss 0.335 | class_loss 0.014 | score_loss 0.144 | bbox_loss 0.178 | epoch_time 1.64min 
+2020-04-20-01-57: epoch 90: val   | loss 0.383 | class_loss 0.029 | score_loss 0.146 | bbox_loss 0.207 | epoch_time 0.69min 
+2020-04-20-01-59: epoch 90: val   | Car_easy 0.829 | Car_moderate 0.814 | Car_hard 0.683 | Pedestrian_easy 0.781 | Pedestrian_moderate 0.699 | Pedestrian_hard 0.634 | Cyclist_easy 0.732 | Cyclist_moderate 0.706 | Cyclist_hard 0.657 | mAP 0.726 
+2020-04-20-02-01: epoch 91: train | loss 0.336 | class_loss 0.013 | score_loss 0.145 | bbox_loss 0.178 | epoch_time 1.65min 
+2020-04-20-02-03: epoch 92: train | loss 0.338 | class_loss 0.014 | score_loss 0.145 | bbox_loss 0.180 | epoch_time 1.64min 
+2020-04-20-02-04: epoch 93: train | loss 0.334 | class_loss 0.013 | score_loss 0.144 | bbox_loss 0.176 | epoch_time 1.64min 
+2020-04-20-02-06: epoch 94: train | loss 0.333 | class_loss 0.013 | score_loss 0.144 | bbox_loss 0.177 | epoch_time 1.65min 
+2020-04-20-02-08: epoch 95: train | loss 0.332 | class_loss 0.013 | score_loss 0.143 | bbox_loss 0.177 | epoch_time 1.65min 
+2020-04-20-02-08: epoch 95: val   | loss 0.373 | class_loss 0.027 | score_loss 0.151 | bbox_loss 0.194 | epoch_time 0.69min 
+2020-04-20-02-10: epoch 95: val   | Car_easy 0.888 | Car_moderate 0.820 | Car_hard 0.735 | Pedestrian_easy 0.753 | Pedestrian_moderate 0.676 | Pedestrian_hard 0.621 | Cyclist_easy 0.769 | Cyclist_moderate 0.712 | Cyclist_hard 0.656 | mAP 0.737 
+2020-04-20-02-12: epoch 96: train | loss 0.328 | class_loss 0.012 | score_loss 0.142 | bbox_loss 0.174 | epoch_time 1.64min 
+2020-04-20-02-14: epoch 97: train | loss 0.329 | class_loss 0.012 | score_loss 0.142 | bbox_loss 0.174 | epoch_time 1.65min 
+2020-04-20-02-15: epoch 98: train | loss 0.331 | class_loss 0.014 | score_loss 0.141 | bbox_loss 0.176 | epoch_time 1.64min 
+2020-04-20-02-17: epoch 99: train | loss 0.332 | class_loss 0.012 | score_loss 0.143 | bbox_loss 0.177 | epoch_time 1.65min 
+2020-04-20-02-19: epoch 100: train | loss 0.325 | class_loss 0.013 | score_loss 0.140 | bbox_loss 0.172 | epoch_time 1.64min 
+2020-04-20-02-20: epoch 100: val   | loss 0.382 | class_loss 0.029 | score_loss 0.153 | bbox_loss 0.200 | epoch_time 0.68min 
+2020-04-20-02-22: epoch 100: val   | Car_easy 0.854 | Car_moderate 0.826 | Car_hard 0.692 | Pedestrian_easy 0.752 | Pedestrian_moderate 0.666 | Pedestrian_hard 0.636 | Cyclist_easy 0.720 | Cyclist_moderate 0.688 | Cyclist_hard 0.638 | mAP 0.719 
+2020-04-20-02-23: epoch 101: train | loss 0.323 | class_loss 0.011 | score_loss 0.141 | bbox_loss 0.171 | epoch_time 1.64min 
+2020-04-20-02-25: epoch 102: train | loss 0.323 | class_loss 0.012 | score_loss 0.140 | bbox_loss 0.171 | epoch_time 1.65min 
+2020-04-20-02-27: epoch 103: train | loss 0.322 | class_loss 0.011 | score_loss 0.141 | bbox_loss 0.170 | epoch_time 1.65min 
+2020-04-20-02-28: epoch 104: train | loss 0.317 | class_loss 0.011 | score_loss 0.139 | bbox_loss 0.167 | epoch_time 1.65min 
+2020-04-20-02-30: epoch 105: train | loss 0.322 | class_loss 0.011 | score_loss 0.141 | bbox_loss 0.171 | epoch_time 1.65min 
+2020-04-20-02-31: epoch 105: val   | loss 0.361 | class_loss 0.026 | score_loss 0.148 | bbox_loss 0.187 | epoch_time 0.66min 
+2020-04-20-02-33: epoch 105: val   | Car_easy 0.870 | Car_moderate 0.843 | Car_hard 0.734 | Pedestrian_easy 0.767 | Pedestrian_moderate 0.693 | Pedestrian_hard 0.635 | Cyclist_easy 0.776 | Cyclist_moderate 0.666 | Cyclist_hard 0.644 | mAP 0.736 
+2020-04-20-02-34: epoch 106: train | loss 0.316 | class_loss 0.011 | score_loss 0.138 | bbox_loss 0.166 | epoch_time 1.65min 
+2020-04-20-02-36: epoch 107: train | loss 0.313 | class_loss 0.011 | score_loss 0.138 | bbox_loss 0.164 | epoch_time 1.65min 
+2020-04-20-02-38: epoch 108: train | loss 0.314 | class_loss 0.011 | score_loss 0.137 | bbox_loss 0.166 | epoch_time 1.64min 
+2020-04-20-02-39: epoch 109: train | loss 0.313 | class_loss 0.010 | score_loss 0.138 | bbox_loss 0.165 | epoch_time 1.65min 
+2020-04-20-02-41: epoch 110: train | loss 0.319 | class_loss 0.012 | score_loss 0.137 | bbox_loss 0.170 | epoch_time 1.64min 
+2020-04-20-02-42: epoch 110: val   | loss 0.368 | class_loss 0.028 | score_loss 0.154 | bbox_loss 0.186 | epoch_time 0.67min 
+2020-04-20-02-44: epoch 110: val   | Car_easy 0.875 | Car_moderate 0.845 | Car_hard 0.731 | Pedestrian_easy 0.785 | Pedestrian_moderate 0.701 | Pedestrian_hard 0.639 | Cyclist_easy 0.785 | Cyclist_moderate 0.721 | Cyclist_hard 0.663 | mAP 0.749 
+2020-04-20-02-45: epoch 111: train | loss 0.314 | class_loss 0.010 | score_loss 0.138 | bbox_loss 0.166 | epoch_time 1.64min 
+2020-04-20-02-47: epoch 112: train | loss 0.315 | class_loss 0.012 | score_loss 0.137 | bbox_loss 0.166 | epoch_time 1.65min 
+2020-04-20-02-49: epoch 113: train | loss 0.309 | class_loss 0.010 | score_loss 0.136 | bbox_loss 0.163 | epoch_time 1.65min 
+2020-04-20-02-50: epoch 114: train | loss 0.312 | class_loss 0.010 | score_loss 0.138 | bbox_loss 0.164 | epoch_time 1.64min 
+2020-04-20-02-52: epoch 115: train | loss 0.308 | class_loss 0.010 | score_loss 0.137 | bbox_loss 0.162 | epoch_time 1.64min 
+2020-04-20-02-53: epoch 115: val   | loss 0.365 | class_loss 0.028 | score_loss 0.142 | bbox_loss 0.195 | epoch_time 0.67min 
+2020-04-20-02-55: epoch 115: val   | Car_easy 0.856 | Car_moderate 0.825 | Car_hard 0.737 | Pedestrian_easy 0.782 | Pedestrian_moderate 0.710 | Pedestrian_hard 0.643 | Cyclist_easy 0.765 | Cyclist_moderate 0.737 | Cyclist_hard 0.675 | mAP 0.748 
+2020-04-20-02-57: epoch 116: train | loss 0.307 | class_loss 0.010 | score_loss 0.136 | bbox_loss 0.161 | epoch_time 1.65min 
+2020-04-20-02-58: epoch 117: train | loss 0.308 | class_loss 0.010 | score_loss 0.136 | bbox_loss 0.162 | epoch_time 1.64min 
+2020-04-20-03-00: epoch 118: train | loss 0.303 | class_loss 0.009 | score_loss 0.135 | bbox_loss 0.159 | epoch_time 1.65min 
+2020-04-20-03-02: epoch 119: train | loss 0.303 | class_loss 0.010 | score_loss 0.134 | bbox_loss 0.159 | epoch_time 1.64min 
+2020-04-20-03-03: epoch 120: train | loss 0.306 | class_loss 0.010 | score_loss 0.135 | bbox_loss 0.161 | epoch_time 1.64min 
+2020-04-20-03-04: epoch 120: val   | loss 0.362 | class_loss 0.029 | score_loss 0.142 | bbox_loss 0.192 | epoch_time 0.68min 
+2020-04-20-03-06: epoch 120: val   | Car_easy 0.851 | Car_moderate 0.828 | Car_hard 0.739 | Pedestrian_easy 0.773 | Pedestrian_moderate 0.694 | Pedestrian_hard 0.634 | Cyclist_easy 0.781 | Cyclist_moderate 0.756 | Cyclist_hard 0.694 | mAP 0.750 
+2020-04-20-03-08: epoch 121: train | loss 0.287 | class_loss 0.009 | score_loss 0.131 | bbox_loss 0.147 | epoch_time 1.64min 
+2020-04-20-03-09: epoch 122: train | loss 0.284 | class_loss 0.008 | score_loss 0.128 | bbox_loss 0.147 | epoch_time 1.65min 
+2020-04-20-03-11: epoch 123: train | loss 0.282 | class_loss 0.007 | score_loss 0.129 | bbox_loss 0.146 | epoch_time 1.65min 
+2020-04-20-03-13: epoch 124: train | loss 0.275 | class_loss 0.008 | score_loss 0.126 | bbox_loss 0.141 | epoch_time 1.64min 
+2020-04-20-03-14: epoch 125: train | loss 0.279 | class_loss 0.008 | score_loss 0.127 | bbox_loss 0.143 | epoch_time 1.64min 
+2020-04-20-03-15: epoch 125: val   | loss 0.337 | class_loss 0.026 | score_loss 0.140 | bbox_loss 0.170 | epoch_time 0.67min 
+2020-04-20-03-17: epoch 125: val   | Car_easy 0.887 | Car_moderate 0.859 | Car_hard 0.756 | Pedestrian_easy 0.799 | Pedestrian_moderate 0.721 | Pedestrian_hard 0.656 | Cyclist_easy 0.805 | Cyclist_moderate 0.746 | Cyclist_hard 0.685 | mAP 0.768 
+2020-04-20-03-19: epoch 126: train | loss 0.275 | class_loss 0.009 | score_loss 0.126 | bbox_loss 0.140 | epoch_time 1.64min 
+2020-04-20-03-20: epoch 127: train | loss 0.278 | class_loss 0.009 | score_loss 0.127 | bbox_loss 0.143 | epoch_time 1.64min 
+2020-04-20-03-22: epoch 128: train | loss 0.273 | class_loss 0.008 | score_loss 0.125 | bbox_loss 0.139 | epoch_time 1.64min 
+2020-04-20-03-24: epoch 129: train | loss 0.273 | class_loss 0.007 | score_loss 0.126 | bbox_loss 0.140 | epoch_time 1.65min 
+2020-04-20-03-25: epoch 130: train | loss 0.271 | class_loss 0.008 | score_loss 0.124 | bbox_loss 0.139 | epoch_time 1.64min 
+2020-04-20-03-26: epoch 130: val   | loss 0.336 | class_loss 0.026 | score_loss 0.139 | bbox_loss 0.171 | epoch_time 0.67min 
+2020-04-20-03-28: epoch 130: val   | Car_easy 0.900 | Car_moderate 0.866 | Car_hard 0.762 | Pedestrian_easy 0.795 | Pedestrian_moderate 0.718 | Pedestrian_hard 0.653 | Cyclist_easy 0.783 | Cyclist_moderate 0.762 | Cyclist_hard 0.694 | mAP 0.770 
+2020-04-20-03-30: epoch 131: train | loss 0.273 | class_loss 0.007 | score_loss 0.126 | bbox_loss 0.140 | epoch_time 1.64min 
+2020-04-20-03-32: epoch 132: train | loss 0.275 | class_loss 0.008 | score_loss 0.125 | bbox_loss 0.142 | epoch_time 1.64min 
+2020-04-20-03-33: epoch 133: train | loss 0.273 | class_loss 0.008 | score_loss 0.125 | bbox_loss 0.139 | epoch_time 1.65min 
+2020-04-20-03-35: epoch 134: train | loss 0.272 | class_loss 0.008 | score_loss 0.125 | bbox_loss 0.139 | epoch_time 1.64min 
+2020-04-20-03-37: epoch 135: train | loss 0.269 | class_loss 0.007 | score_loss 0.122 | bbox_loss 0.139 | epoch_time 1.65min 
+2020-04-20-03-37: epoch 135: val   | loss 0.339 | class_loss 0.024 | score_loss 0.137 | bbox_loss 0.178 | epoch_time 0.66min 
+2020-04-20-03-39: epoch 135: val   | Car_easy 0.882 | Car_moderate 0.846 | Car_hard 0.743 | Pedestrian_easy 0.787 | Pedestrian_moderate 0.717 | Pedestrian_hard 0.653 | Cyclist_easy 0.784 | Cyclist_moderate 0.741 | Cyclist_hard 0.717 | mAP 0.763 
+2020-04-20-03-41: epoch 136: train | loss 0.271 | class_loss 0.007 | score_loss 0.125 | bbox_loss 0.139 | epoch_time 1.65min 
+2020-04-20-03-43: epoch 137: train | loss 0.269 | class_loss 0.007 | score_loss 0.124 | bbox_loss 0.138 | epoch_time 1.64min 
+2020-04-20-03-44: epoch 138: train | loss 0.264 | class_loss 0.007 | score_loss 0.122 | bbox_loss 0.135 | epoch_time 1.64min 
+2020-04-20-03-46: epoch 139: train | loss 0.270 | class_loss 0.007 | score_loss 0.124 | bbox_loss 0.139 | epoch_time 1.64min 
+2020-04-20-03-48: epoch 140: train | loss 0.269 | class_loss 0.008 | score_loss 0.124 | bbox_loss 0.137 | epoch_time 1.64min 
+2020-04-20-03-48: epoch 140: val   | loss 0.336 | class_loss 0.025 | score_loss 0.139 | bbox_loss 0.171 | epoch_time 0.68min 
+2020-04-20-03-50: epoch 140: val   | Car_easy 0.910 | Car_moderate 0.868 | Car_hard 0.769 | Pedestrian_easy 0.805 | Pedestrian_moderate 0.737 | Pedestrian_hard 0.665 | Cyclist_easy 0.803 | Cyclist_moderate 0.748 | Cyclist_hard 0.679 | mAP 0.776 
+2020-04-20-03-52: epoch 141: train | loss 0.264 | class_loss 0.007 | score_loss 0.124 | bbox_loss 0.133 | epoch_time 1.64min 
+2020-04-20-03-54: epoch 142: train | loss 0.272 | class_loss 0.007 | score_loss 0.125 | bbox_loss 0.140 | epoch_time 1.65min 
+2020-04-20-03-55: epoch 143: train | loss 0.269 | class_loss 0.007 | score_loss 0.125 | bbox_loss 0.136 | epoch_time 1.64min 
+2020-04-20-03-57: epoch 144: train | loss 0.265 | class_loss 0.007 | score_loss 0.123 | bbox_loss 0.135 | epoch_time 1.64min 
+2020-04-20-03-59: epoch 145: train | loss 0.262 | class_loss 0.007 | score_loss 0.121 | bbox_loss 0.135 | epoch_time 1.65min 
+2020-04-20-03-59: epoch 145: val   | loss 0.336 | class_loss 0.025 | score_loss 0.135 | bbox_loss 0.176 | epoch_time 0.67min 
+2020-04-20-04-01: epoch 145: val   | Car_easy 0.913 | Car_moderate 0.870 | Car_hard 0.772 | Pedestrian_easy 0.813 | Pedestrian_moderate 0.729 | Pedestrian_hard 0.660 | Cyclist_easy 0.789 | Cyclist_moderate 0.750 | Cyclist_hard 0.722 | mAP 0.780 
+2020-04-20-04-03: epoch 146: train | loss 0.262 | class_loss 0.007 | score_loss 0.121 | bbox_loss 0.134 | epoch_time 1.64min 
+2020-04-20-04-05: epoch 147: train | loss 0.265 | class_loss 0.007 | score_loss 0.123 | bbox_loss 0.135 | epoch_time 1.64min 
+2020-04-20-04-06: epoch 148: train | loss 0.264 | class_loss 0.007 | score_loss 0.122 | bbox_loss 0.134 | epoch_time 1.65min 
+2020-04-20-04-08: epoch 149: train | loss 0.260 | class_loss 0.006 | score_loss 0.121 | bbox_loss 0.133 | epoch_time 1.65min 
+2020-04-20-04-10: epoch 150: train | loss 0.259 | class_loss 0.006 | score_loss 0.121 | bbox_loss 0.132 | epoch_time 1.65min 
+2020-04-20-04-10: epoch 150: val   | loss 0.333 | class_loss 0.028 | score_loss 0.136 | bbox_loss 0.169 | epoch_time 0.67min 
+2020-04-20-04-13: epoch 150: val   | Car_easy 0.892 | Car_moderate 0.862 | Car_hard 0.746 | Pedestrian_easy 0.798 | Pedestrian_moderate 0.725 | Pedestrian_hard 0.655 | Cyclist_easy 0.776 | Cyclist_moderate 0.736 | Cyclist_hard 0.705 | mAP 0.766 
+2020-04-20-04-14: epoch 151: train | loss 0.264 | class_loss 0.007 | score_loss 0.121 | bbox_loss 0.135 | epoch_time 1.64min 
+2020-04-20-04-16: epoch 152: train | loss 0.262 | class_loss 0.007 | score_loss 0.121 | bbox_loss 0.133 | epoch_time 1.65min 
+2020-04-20-04-18: epoch 153: train | loss 0.259 | class_loss 0.006 | score_loss 0.121 | bbox_loss 0.131 | epoch_time 1.64min 
+2020-04-20-04-19: epoch 154: train | loss 0.261 | class_loss 0.006 | score_loss 0.122 | bbox_loss 0.133 | epoch_time 1.65min 
+2020-04-20-04-21: epoch 155: train | loss 0.259 | class_loss 0.006 | score_loss 0.120 | bbox_loss 0.133 | epoch_time 1.64min 
+2020-04-20-04-22: epoch 155: val   | loss 0.330 | class_loss 0.025 | score_loss 0.135 | bbox_loss 0.170 | epoch_time 0.70min 
+2020-04-20-04-24: epoch 155: val   | Car_easy 0.894 | Car_moderate 0.865 | Car_hard 0.767 | Pedestrian_easy 0.807 | Pedestrian_moderate 0.731 | Pedestrian_hard 0.667 | Cyclist_easy 0.814 | Cyclist_moderate 0.761 | Cyclist_hard 0.743 | mAP 0.783 
+2020-04-20-04-25: epoch 156: train | loss 0.256 | class_loss 0.006 | score_loss 0.121 | bbox_loss 0.129 | epoch_time 1.64min 
+2020-04-20-04-27: epoch 157: train | loss 0.258 | class_loss 0.006 | score_loss 0.120 | bbox_loss 0.131 | epoch_time 1.64min 
+2020-04-20-04-29: epoch 158: train | loss 0.259 | class_loss 0.006 | score_loss 0.121 | bbox_loss 0.132 | epoch_time 1.65min 
+2020-04-20-04-30: epoch 159: train | loss 0.259 | class_loss 0.006 | score_loss 0.121 | bbox_loss 0.132 | epoch_time 1.64min 
+2020-04-20-04-32: epoch 160: train | loss 0.256 | class_loss 0.007 | score_loss 0.119 | bbox_loss 0.130 | epoch_time 1.65min 
+2020-04-20-04-33: epoch 160: val   | loss 0.331 | class_loss 0.026 | score_loss 0.131 | bbox_loss 0.173 | epoch_time 0.70min 
+2020-04-20-04-35: epoch 160: val   | Car_easy 0.901 | Car_moderate 0.869 | Car_hard 0.773 | Pedestrian_easy 0.807 | Pedestrian_moderate 0.729 | Pedestrian_hard 0.660 | Cyclist_easy 0.787 | Cyclist_moderate 0.740 | Cyclist_hard 0.715 | mAP 0.776 
+2020-04-20-04-36: epoch 161: train | loss 0.257 | class_loss 0.007 | score_loss 0.120 | bbox_loss 0.130 | epoch_time 1.64min 
+2020-04-20-04-38: epoch 162: train | loss 0.255 | class_loss 0.007 | score_loss 0.118 | bbox_loss 0.130 | epoch_time 1.64min 
+2020-04-20-04-40: epoch 163: train | loss 0.257 | class_loss 0.008 | score_loss 0.120 | bbox_loss 0.129 | epoch_time 1.65min 
+2020-04-20-04-41: epoch 164: train | loss 0.253 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.128 | epoch_time 1.64min 
+2020-04-20-04-43: epoch 165: train | loss 0.254 | class_loss 0.005 | score_loss 0.118 | bbox_loss 0.130 | epoch_time 1.65min 
+2020-04-20-04-44: epoch 165: val   | loss 0.326 | class_loss 0.025 | score_loss 0.135 | bbox_loss 0.166 | epoch_time 0.70min 
+2020-04-20-04-46: epoch 165: val   | Car_easy 0.920 | Car_moderate 0.874 | Car_hard 0.776 | Pedestrian_easy 0.808 | Pedestrian_moderate 0.737 | Pedestrian_hard 0.666 | Cyclist_easy 0.811 | Cyclist_moderate 0.762 | Cyclist_hard 0.739 | mAP 0.788 
+2020-04-20-04-48: epoch 166: train | loss 0.253 | class_loss 0.007 | score_loss 0.118 | bbox_loss 0.128 | epoch_time 1.64min 
+2020-04-20-04-49: epoch 167: train | loss 0.255 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.129 | epoch_time 1.64min 
+2020-04-20-04-51: epoch 168: train | loss 0.255 | class_loss 0.006 | score_loss 0.118 | bbox_loss 0.130 | epoch_time 1.64min 
+2020-04-20-04-53: epoch 169: train | loss 0.253 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.128 | epoch_time 1.65min 
+2020-04-20-04-54: epoch 170: train | loss 0.254 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.129 | epoch_time 1.65min 
+2020-04-20-04-55: epoch 170: val   | loss 0.328 | class_loss 0.026 | score_loss 0.133 | bbox_loss 0.170 | epoch_time 0.71min 
+2020-04-20-04-57: epoch 170: val   | Car_easy 0.896 | Car_moderate 0.864 | Car_hard 0.758 | Pedestrian_easy 0.815 | Pedestrian_moderate 0.735 | Pedestrian_hard 0.665 | Cyclist_easy 0.810 | Cyclist_moderate 0.759 | Cyclist_hard 0.740 | mAP 0.782 
+2020-04-20-04-59: epoch 171: train | loss 0.251 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.126 | epoch_time 1.64min 
+2020-04-20-05-00: epoch 172: train | loss 0.255 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.130 | epoch_time 1.65min 
+2020-04-20-05-02: epoch 173: train | loss 0.252 | class_loss 0.006 | score_loss 0.117 | bbox_loss 0.129 | epoch_time 1.64min 
+2020-04-20-05-04: epoch 174: train | loss 0.254 | class_loss 0.005 | score_loss 0.120 | bbox_loss 0.129 | epoch_time 1.65min 
+2020-04-20-05-05: epoch 175: train | loss 0.252 | class_loss 0.006 | score_loss 0.118 | bbox_loss 0.128 | epoch_time 1.65min 
+2020-04-20-05-06: epoch 175: val   | loss 0.328 | class_loss 0.024 | score_loss 0.130 | bbox_loss 0.174 | epoch_time 0.72min 
+2020-04-20-05-08: epoch 175: val   | Car_easy 0.892 | Car_moderate 0.861 | Car_hard 0.750 | Pedestrian_easy 0.802 | Pedestrian_moderate 0.727 | Pedestrian_hard 0.657 | Cyclist_easy 0.805 | Cyclist_moderate 0.764 | Cyclist_hard 0.736 | mAP 0.777 
+2020-04-20-05-10: epoch 176: train | loss 0.251 | class_loss 0.006 | score_loss 0.119 | bbox_loss 0.127 | epoch_time 1.64min 
+2020-04-20-05-12: epoch 177: train | loss 0.249 | class_loss 0.006 | score_loss 0.116 | bbox_loss 0.127 | epoch_time 1.64min 
+2020-04-20-05-13: epoch 178: train | loss 0.251 | class_loss 0.007 | score_loss 0.117 | bbox_loss 0.127 | epoch_time 1.65min 
+2020-04-20-05-15: epoch 179: train | loss 0.249 | class_loss 0.006 | score_loss 0.117 | bbox_loss 0.127 | epoch_time 1.65min 
+2020-04-20-05-17: epoch 180: train | loss 0.248 | class_loss 0.006 | score_loss 0.116 | bbox_loss 0.126 | epoch_time 1.65min 
+2020-04-20-05-17: epoch 180: val   | loss 0.330 | class_loss 0.027 | score_loss 0.133 | bbox_loss 0.171 | epoch_time 0.71min 
+2020-04-20-05-19: epoch 180: val   | Car_easy 0.906 | Car_moderate 0.866 | Car_hard 0.768 | Pedestrian_easy 0.799 | Pedestrian_moderate 0.726 | Pedestrian_hard 0.657 | Cyclist_easy 0.803 | Cyclist_moderate 0.761 | Cyclist_hard 0.740 | mAP 0.781 
+2020-04-20-05-21: epoch 181: train | loss 0.241 | class_loss 0.007 | score_loss 0.113 | bbox_loss 0.121 | epoch_time 1.65min 
+2020-04-20-05-23: epoch 182: train | loss 0.236 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.118 | epoch_time 1.66min 
+2020-04-20-05-24: epoch 183: train | loss 0.238 | class_loss 0.006 | score_loss 0.113 | bbox_loss 0.119 | epoch_time 1.65min 
+2020-04-20-05-26: epoch 184: train | loss 0.236 | class_loss 0.005 | score_loss 0.113 | bbox_loss 0.118 | epoch_time 1.66min 
+2020-04-20-05-28: epoch 185: train | loss 0.238 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.120 | epoch_time 1.66min 
+2020-04-20-05-29: epoch 185: val   | loss 0.321 | class_loss 0.025 | score_loss 0.130 | bbox_loss 0.166 | epoch_time 0.73min 
+2020-04-20-05-31: epoch 185: val   | Car_easy 0.902 | Car_moderate 0.872 | Car_hard 0.777 | Pedestrian_easy 0.813 | Pedestrian_moderate 0.735 | Pedestrian_hard 0.668 | Cyclist_easy 0.819 | Cyclist_moderate 0.772 | Cyclist_hard 0.752 | mAP 0.790 
+2020-04-20-05-32: epoch 186: train | loss 0.235 | class_loss 0.006 | score_loss 0.112 | bbox_loss 0.117 | epoch_time 1.66min 
+2020-04-20-05-34: epoch 187: train | loss 0.236 | class_loss 0.005 | score_loss 0.114 | bbox_loss 0.117 | epoch_time 1.65min 
+2020-04-20-05-36: epoch 188: train | loss 0.237 | class_loss 0.005 | score_loss 0.114 | bbox_loss 0.117 | epoch_time 1.65min 
+2020-04-20-05-37: epoch 189: train | loss 0.237 | class_loss 0.006 | score_loss 0.113 | bbox_loss 0.119 | epoch_time 1.65min 
+2020-04-20-05-39: epoch 190: train | loss 0.235 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.118 | epoch_time 1.66min 
+2020-04-20-05-40: epoch 190: val   | loss 0.320 | class_loss 0.025 | score_loss 0.128 | bbox_loss 0.167 | epoch_time 0.73min 
+2020-04-20-05-42: epoch 190: val   | Car_easy 0.908 | Car_moderate 0.874 | Car_hard 0.780 | Pedestrian_easy 0.805 | Pedestrian_moderate 0.733 | Pedestrian_hard 0.662 | Cyclist_easy 0.811 | Cyclist_moderate 0.755 | Cyclist_hard 0.739 | mAP 0.785 
+2020-04-20-05-43: epoch 191: train | loss 0.234 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.117 | epoch_time 1.65min 
+2020-04-20-05-45: epoch 192: train | loss 0.236 | class_loss 0.005 | score_loss 0.114 | bbox_loss 0.117 | epoch_time 1.65min 
+2020-04-20-05-47: epoch 193: train | loss 0.234 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.116 | epoch_time 1.65min 
+2020-04-20-05-48: epoch 194: train | loss 0.234 | class_loss 0.005 | score_loss 0.113 | bbox_loss 0.117 | epoch_time 1.65min 
+2020-04-20-05-50: epoch 195: train | loss 0.232 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.115 | epoch_time 1.65min 
+2020-04-20-05-51: epoch 195: val   | loss 0.319 | class_loss 0.026 | score_loss 0.130 | bbox_loss 0.163 | epoch_time 0.73min 
+2020-04-20-05-53: epoch 195: val   | Car_easy 0.909 | Car_moderate 0.875 | Car_hard 0.781 | Pedestrian_easy 0.830 | Pedestrian_moderate 0.745 | Pedestrian_hard 0.712 | Cyclist_easy 0.818 | Cyclist_moderate 0.758 | Cyclist_hard 0.743 | mAP 0.797 
+2020-04-20-05-55: epoch 196: train | loss 0.234 | class_loss 0.005 | score_loss 0.113 | bbox_loss 0.116 | epoch_time 1.66min 
+2020-04-20-05-56: epoch 197: train | loss 0.238 | class_loss 0.006 | score_loss 0.113 | bbox_loss 0.119 | epoch_time 1.66min 
+2020-04-20-05-58: epoch 198: train | loss 0.231 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.115 | epoch_time 1.67min 
+2020-04-20-06-00: epoch 199: train | loss 0.233 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.115 | epoch_time 1.67min 
+2020-04-20-06-01: epoch 200: train | loss 0.233 | class_loss 0.005 | score_loss 0.113 | bbox_loss 0.115 | epoch_time 1.66min 
+2020-04-20-06-02: epoch 200: val   | loss 0.315 | class_loss 0.024 | score_loss 0.128 | bbox_loss 0.163 | epoch_time 0.72min 
+2020-04-20-06-04: epoch 200: val   | Car_easy 0.911 | Car_moderate 0.874 | Car_hard 0.779 | Pedestrian_easy 0.806 | Pedestrian_moderate 0.731 | Pedestrian_hard 0.661 | Cyclist_easy 0.808 | Cyclist_moderate 0.754 | Cyclist_hard 0.737 | mAP 0.784 
+2020-04-20-06-06: epoch 201: train | loss 0.231 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.115 | epoch_time 1.66min 
+2020-04-20-06-08: epoch 202: train | loss 0.234 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.117 | epoch_time 1.66min 
+2020-04-20-06-09: epoch 203: train | loss 0.233 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.116 | epoch_time 1.67min 
+2020-04-20-06-11: epoch 204: train | loss 0.235 | class_loss 0.005 | score_loss 0.113 | bbox_loss 0.118 | epoch_time 1.66min 
+2020-04-20-06-13: epoch 205: train | loss 0.232 | class_loss 0.004 | score_loss 0.113 | bbox_loss 0.115 | epoch_time 1.67min 
+2020-04-20-06-13: epoch 205: val   | loss 0.318 | class_loss 0.025 | score_loss 0.128 | bbox_loss 0.165 | epoch_time 0.74min 
+2020-04-20-06-16: epoch 205: val   | Car_easy 0.918 | Car_moderate 0.876 | Car_hard 0.781 | Pedestrian_easy 0.807 | Pedestrian_moderate 0.736 | Pedestrian_hard 0.664 | Cyclist_easy 0.829 | Cyclist_moderate 0.773 | Cyclist_hard 0.754 | mAP 0.793 
+2020-04-20-06-17: epoch 206: train | loss 0.231 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.114 | epoch_time 1.66min 
+2020-04-20-06-19: epoch 207: train | loss 0.229 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.114 | epoch_time 1.66min 
+2020-04-20-06-21: epoch 208: train | loss 0.231 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.116 | epoch_time 1.67min 
+2020-04-20-06-22: epoch 209: train | loss 0.232 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.115 | epoch_time 1.67min 
+2020-04-20-06-24: epoch 210: train | loss 0.233 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.117 | epoch_time 1.67min 
+2020-04-20-06-25: epoch 210: val   | loss 0.318 | class_loss 0.024 | score_loss 0.128 | bbox_loss 0.166 | epoch_time 0.73min 
+2020-04-20-06-27: epoch 210: val   | Car_easy 0.906 | Car_moderate 0.870 | Car_hard 0.777 | Pedestrian_easy 0.805 | Pedestrian_moderate 0.736 | Pedestrian_hard 0.665 | Cyclist_easy 0.818 | Cyclist_moderate 0.763 | Cyclist_hard 0.744 | mAP 0.787 
+2020-04-20-06-28: epoch 211: train | loss 0.232 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.116 | epoch_time 1.66min 
+2020-04-20-06-30: epoch 212: train | loss 0.232 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.115 | epoch_time 1.67min 
+2020-04-20-06-32: epoch 213: train | loss 0.231 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.115 | epoch_time 1.67min 
+2020-04-20-06-34: epoch 214: train | loss 0.231 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.114 | epoch_time 1.67min 
+2020-04-20-06-35: epoch 215: train | loss 0.230 | class_loss 0.004 | score_loss 0.111 | bbox_loss 0.115 | epoch_time 1.66min 
+2020-04-20-06-36: epoch 215: val   | loss 0.318 | class_loss 0.025 | score_loss 0.126 | bbox_loss 0.168 | epoch_time 0.73min 
+2020-04-20-06-38: epoch 215: val   | Car_easy 0.911 | Car_moderate 0.875 | Car_hard 0.781 | Pedestrian_easy 0.817 | Pedestrian_moderate 0.740 | Pedestrian_hard 0.671 | Cyclist_easy 0.798 | Cyclist_moderate 0.762 | Cyclist_hard 0.735 | mAP 0.788 
+2020-04-20-06-40: epoch 216: train | loss 0.230 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.115 | epoch_time 1.65min 
+2020-04-20-06-41: epoch 217: train | loss 0.231 | class_loss 0.005 | score_loss 0.112 | bbox_loss 0.114 | epoch_time 1.66min 
+2020-04-20-06-43: epoch 218: train | loss 0.228 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.113 | epoch_time 1.66min 
+2020-04-20-06-45: epoch 219: train | loss 0.230 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.115 | epoch_time 1.66min 
+2020-04-20-06-46: epoch 220: train | loss 0.231 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.115 | epoch_time 1.66min 
+2020-04-20-06-47: epoch 220: val   | loss 0.317 | class_loss 0.026 | score_loss 0.127 | bbox_loss 0.164 | epoch_time 0.72min 
+2020-04-20-06-49: epoch 220: val   | Car_easy 0.909 | Car_moderate 0.873 | Car_hard 0.780 | Pedestrian_easy 0.815 | Pedestrian_moderate 0.741 | Pedestrian_hard 0.670 | Cyclist_easy 0.831 | Cyclist_moderate 0.772 | Cyclist_hard 0.757 | mAP 0.794 
+2020-04-20-06-51: epoch 221: train | loss 0.229 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.114 | epoch_time 1.67min 
+2020-04-20-06-53: epoch 222: train | loss 0.228 | class_loss 0.004 | score_loss 0.112 | bbox_loss 0.112 | epoch_time 1.67min 
+2020-04-20-06-54: epoch 223: train | loss 0.227 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.112 | epoch_time 1.66min 
+2020-04-20-06-56: epoch 224: train | loss 0.225 | class_loss 0.004 | score_loss 0.109 | bbox_loss 0.112 | epoch_time 1.66min 
+2020-04-20-06-58: epoch 225: train | loss 0.227 | class_loss 0.004 | score_loss 0.110 | bbox_loss 0.112 | epoch_time 1.67min 
+2020-04-20-06-58: epoch 225: val   | loss 0.317 | class_loss 0.025 | score_loss 0.127 | bbox_loss 0.165 | epoch_time 0.74min 
+2020-04-20-07-01: epoch 225: val   | Car_easy 0.916 | Car_moderate 0.874 | Car_hard 0.781 | Pedestrian_easy 0.814 | Pedestrian_moderate 0.742 | Pedestrian_hard 0.671 | Cyclist_easy 0.806 | Cyclist_moderate 0.757 | Cyclist_hard 0.732 | mAP 0.788 
+2020-04-20-07-02: epoch 226: train | loss 0.229 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.114 | epoch_time 1.67min 
+2020-04-20-07-04: epoch 227: train | loss 0.229 | class_loss 0.005 | score_loss 0.110 | bbox_loss 0.114 | epoch_time 1.66min 
+2020-04-20-07-06: epoch 228: train | loss 0.228 | class_loss 0.006 | score_loss 0.110 | bbox_loss 0.113 | epoch_time 1.67min 
+2020-04-20-07-07: epoch 229: train | loss 0.225 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.113 | epoch_time 1.67min 
+2020-04-20-07-09: epoch 230: train | loss 0.224 | class_loss 0.004 | score_loss 0.109 | bbox_loss 0.111 | epoch_time 1.67min 
+2020-04-20-07-10: epoch 230: val   | loss 0.315 | class_loss 0.026 | score_loss 0.126 | bbox_loss 0.164 | epoch_time 0.72min 
+2020-04-20-07-12: epoch 230: val   | Car_easy 0.908 | Car_moderate 0.872 | Car_hard 0.778 | Pedestrian_easy 0.820 | Pedestrian_moderate 0.741 | Pedestrian_hard 0.710 | Cyclist_easy 0.829 | Cyclist_moderate 0.772 | Cyclist_hard 0.750 | mAP 0.798 
+2020-04-20-07-14: epoch 231: train | loss 0.226 | class_loss 0.004 | score_loss 0.109 | bbox_loss 0.113 | epoch_time 1.66min 
+2020-04-20-07-15: epoch 232: train | loss 0.226 | class_loss 0.004 | score_loss 0.109 | bbox_loss 0.112 | epoch_time 1.66min 
+2020-04-20-07-17: epoch 233: train | loss 0.227 | class_loss 0.004 | score_loss 0.110 | bbox_loss 0.113 | epoch_time 1.66min 
+2020-04-20-07-19: epoch 234: train | loss 0.230 | class_loss 0.005 | score_loss 0.111 | bbox_loss 0.114 | epoch_time 1.66min 
+2020-04-20-07-20: epoch 235: train | loss 0.227 | class_loss 0.004 | score_loss 0.110 | bbox_loss 0.112 | epoch_time 1.66min 
+2020-04-20-07-21: epoch 235: val   | loss 0.313 | class_loss 0.024 | score_loss 0.126 | bbox_loss 0.162 | epoch_time 0.72min 
+2020-04-20-07-23: epoch 235: val   | Car_easy 0.903 | Car_moderate 0.876 | Car_hard 0.782 | Pedestrian_easy 0.815 | Pedestrian_moderate 0.742 | Pedestrian_hard 0.672 | Cyclist_easy 0.807 | Cyclist_moderate 0.763 | Cyclist_hard 0.741 | mAP 0.789 
+2020-04-20-07-25: epoch 236: train | loss 0.224 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.112 | epoch_time 1.65min 
+2020-04-20-07-26: epoch 237: train | loss 0.228 | class_loss 0.005 | score_loss 0.109 | bbox_loss 0.114 | epoch_time 1.65min 
+2020-04-20-07-28: epoch 238: train | loss 0.226 | class_loss 0.005 | score_loss 0.108 | bbox_loss 0.112 | epoch_time 1.66min 
+2020-04-20-07-30: epoch 239: train | loss 0.224 | class_loss 0.005 | score_loss 0.108 | bbox_loss 0.111 | epoch_time 1.67min 
+2020-04-20-07-31: epoch 240: train | loss 0.225 | class_loss 0.005 | score_loss 0.109 | bbox_loss 0.111 | epoch_time 1.66min 
+2020-04-20-07-32: epoch 240: val   | loss 0.316 | class_loss 0.026 | score_loss 0.127 | bbox_loss 0.163 | epoch_time 0.73min 
+2020-04-20-07-34: epoch 240: val   | Car_easy 0.909 | Car_moderate 0.873 | Car_hard 0.779 | Pedestrian_easy 0.817 | Pedestrian_moderate 0.742 | Pedestrian_hard 0.669 | Cyclist_easy 0.818 | Cyclist_moderate 0.770 | Cyclist_hard 0.753 | mAP 0.792 
+2020-04-20-07-36: epoch 241: train | loss 0.222 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.110 | epoch_time 1.69min 
+2020-04-20-07-38: epoch 242: train | loss 0.222 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.110 | epoch_time 1.70min 
+2020-04-20-07-39: epoch 243: train | loss 0.220 | class_loss 0.005 | score_loss 0.108 | bbox_loss 0.108 | epoch_time 1.70min 
+2020-04-20-07-41: epoch 244: train | loss 0.219 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.108 | epoch_time 1.70min 
+2020-04-20-07-43: epoch 245: train | loss 0.220 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.107 | epoch_time 1.69min 
+2020-04-20-07-44: epoch 245: val   | loss 0.316 | class_loss 0.025 | score_loss 0.127 | bbox_loss 0.164 | epoch_time 0.75min 
+2020-04-20-07-46: epoch 245: val   | Car_easy 0.915 | Car_moderate 0.879 | Car_hard 0.785 | Pedestrian_easy 0.823 | Pedestrian_moderate 0.747 | Pedestrian_hard 0.670 | Cyclist_easy 0.812 | Cyclist_moderate 0.765 | Cyclist_hard 0.744 | mAP 0.793 
+2020-04-20-07-47: epoch 246: train | loss 0.220 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.109 | epoch_time 1.70min 
+2020-04-20-07-49: epoch 247: train | loss 0.221 | class_loss 0.004 | score_loss 0.109 | bbox_loss 0.108 | epoch_time 1.66min 
+2020-04-20-07-51: epoch 248: train | loss 0.218 | class_loss 0.003 | score_loss 0.106 | bbox_loss 0.108 | epoch_time 1.67min 
+2020-04-20-07-53: epoch 249: train | loss 0.219 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.107 | epoch_time 1.67min 
+2020-04-20-07-54: epoch 250: train | loss 0.221 | class_loss 0.005 | score_loss 0.108 | bbox_loss 0.109 | epoch_time 1.67min 
+2020-04-20-07-55: epoch 250: val   | loss 0.312 | class_loss 0.025 | score_loss 0.126 | bbox_loss 0.161 | epoch_time 0.74min 
+2020-04-20-07-57: epoch 250: val   | Car_easy 0.911 | Car_moderate 0.879 | Car_hard 0.786 | Pedestrian_easy 0.823 | Pedestrian_moderate 0.747 | Pedestrian_hard 0.716 | Cyclist_easy 0.813 | Cyclist_moderate 0.761 | Cyclist_hard 0.693 | mAP 0.792 
+2020-04-20-07-59: epoch 251: train | loss 0.218 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.107 | epoch_time 1.66min 
+2020-04-20-08-00: epoch 252: train | loss 0.216 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.107 | epoch_time 1.66min 
+2020-04-20-08-02: epoch 253: train | loss 0.218 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.108 | epoch_time 1.65min 
+2020-04-20-08-04: epoch 254: train | loss 0.219 | class_loss 0.005 | score_loss 0.106 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-06: epoch 255: train | loss 0.216 | class_loss 0.003 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-08-06: epoch 255: val   | loss 0.309 | class_loss 0.025 | score_loss 0.127 | bbox_loss 0.157 | epoch_time 0.70min 
+2020-04-20-08-08: epoch 255: val   | Car_easy 0.908 | Car_moderate 0.877 | Car_hard 0.785 | Pedestrian_easy 0.821 | Pedestrian_moderate 0.745 | Pedestrian_hard 0.719 | Cyclist_easy 0.804 | Cyclist_moderate 0.764 | Cyclist_hard 0.741 | mAP 0.796 
+2020-04-20-08-10: epoch 256: train | loss 0.220 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.108 | epoch_time 1.64min 
+2020-04-20-08-12: epoch 257: train | loss 0.219 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-13: epoch 258: train | loss 0.217 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-15: epoch 259: train | loss 0.220 | class_loss 0.004 | score_loss 0.108 | bbox_loss 0.108 | epoch_time 1.65min 
+2020-04-20-08-17: epoch 260: train | loss 0.218 | class_loss 0.005 | score_loss 0.107 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-17: epoch 260: val   | loss 0.310 | class_loss 0.024 | score_loss 0.127 | bbox_loss 0.158 | epoch_time 0.72min 
+2020-04-20-08-19: epoch 260: val   | Car_easy 0.907 | Car_moderate 0.873 | Car_hard 0.780 | Pedestrian_easy 0.826 | Pedestrian_moderate 0.749 | Pedestrian_hard 0.720 | Cyclist_easy 0.816 | Cyclist_moderate 0.773 | Cyclist_hard 0.751 | mAP 0.800 
+2020-04-20-08-21: epoch 261: train | loss 0.218 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.106 | epoch_time 1.66min 
+2020-04-20-08-23: epoch 262: train | loss 0.216 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-08-25: epoch 263: train | loss 0.216 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-26: epoch 264: train | loss 0.219 | class_loss 0.005 | score_loss 0.106 | bbox_loss 0.108 | epoch_time 1.65min 
+2020-04-20-08-28: epoch 265: train | loss 0.214 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-08-29: epoch 265: val   | loss 0.311 | class_loss 0.025 | score_loss 0.125 | bbox_loss 0.161 | epoch_time 0.73min 
+2020-04-20-08-31: epoch 265: val   | Car_easy 0.902 | Car_moderate 0.875 | Car_hard 0.782 | Pedestrian_easy 0.821 | Pedestrian_moderate 0.741 | Pedestrian_hard 0.670 | Cyclist_easy 0.819 | Cyclist_moderate 0.769 | Cyclist_hard 0.750 | mAP 0.792 
+2020-04-20-08-32: epoch 266: train | loss 0.216 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.64min 
+2020-04-20-08-34: epoch 267: train | loss 0.218 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-36: epoch 268: train | loss 0.215 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.105 | epoch_time 1.66min 
+2020-04-20-08-37: epoch 269: train | loss 0.216 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.66min 
+2020-04-20-08-39: epoch 270: train | loss 0.217 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.108 | epoch_time 1.65min 
+2020-04-20-08-40: epoch 270: val   | loss 0.311 | class_loss 0.025 | score_loss 0.125 | bbox_loss 0.161 | epoch_time 0.68min 
+2020-04-20-08-42: epoch 270: val   | Car_easy 0.903 | Car_moderate 0.875 | Car_hard 0.782 | Pedestrian_easy 0.819 | Pedestrian_moderate 0.745 | Pedestrian_hard 0.673 | Cyclist_easy 0.819 | Cyclist_moderate 0.773 | Cyclist_hard 0.750 | mAP 0.793 
+2020-04-20-08-44: epoch 271: train | loss 0.214 | class_loss 0.003 | score_loss 0.105 | bbox_loss 0.106 | epoch_time 1.64min 
+2020-04-20-08-45: epoch 272: train | loss 0.217 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-08-47: epoch 273: train | loss 0.216 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-08-49: epoch 274: train | loss 0.217 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-08-50: epoch 275: train | loss 0.216 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-08-51: epoch 275: val   | loss 0.311 | class_loss 0.025 | score_loss 0.126 | bbox_loss 0.160 | epoch_time 0.68min 
+2020-04-20-08-53: epoch 275: val   | Car_easy 0.904 | Car_moderate 0.876 | Car_hard 0.783 | Pedestrian_easy 0.805 | Pedestrian_moderate 0.739 | Pedestrian_hard 0.667 | Cyclist_easy 0.825 | Cyclist_moderate 0.768 | Cyclist_hard 0.751 | mAP 0.791 
+2020-04-20-08-55: epoch 276: train | loss 0.219 | class_loss 0.005 | score_loss 0.106 | bbox_loss 0.108 | epoch_time 1.65min 
+2020-04-20-08-56: epoch 277: train | loss 0.213 | class_loss 0.004 | score_loss 0.104 | bbox_loss 0.105 | epoch_time 1.64min 
+2020-04-20-08-58: epoch 278: train | loss 0.216 | class_loss 0.005 | score_loss 0.105 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-09-00: epoch 279: train | loss 0.215 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-01: epoch 280: train | loss 0.214 | class_loss 0.004 | score_loss 0.104 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-09-02: epoch 280: val   | loss 0.311 | class_loss 0.025 | score_loss 0.126 | bbox_loss 0.160 | epoch_time 0.67min 
+2020-04-20-09-04: epoch 280: val   | Car_easy 0.908 | Car_moderate 0.875 | Car_hard 0.782 | Pedestrian_easy 0.821 | Pedestrian_moderate 0.746 | Pedestrian_hard 0.717 | Cyclist_easy 0.825 | Cyclist_moderate 0.772 | Cyclist_hard 0.757 | mAP 0.800 
+2020-04-20-09-06: epoch 281: train | loss 0.215 | class_loss 0.005 | score_loss 0.105 | bbox_loss 0.105 | epoch_time 1.64min 
+2020-04-20-09-07: epoch 282: train | loss 0.215 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-09-09: epoch 283: train | loss 0.217 | class_loss 0.004 | score_loss 0.107 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-09-11: epoch 284: train | loss 0.212 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.103 | epoch_time 1.65min 
+2020-04-20-09-12: epoch 285: train | loss 0.214 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-13: epoch 285: val   | loss 0.310 | class_loss 0.025 | score_loss 0.125 | bbox_loss 0.160 | epoch_time 0.68min 
+2020-04-20-09-15: epoch 285: val   | Car_easy 0.904 | Car_moderate 0.876 | Car_hard 0.783 | Pedestrian_easy 0.816 | Pedestrian_moderate 0.744 | Pedestrian_hard 0.672 | Cyclist_easy 0.822 | Cyclist_moderate 0.773 | Cyclist_hard 0.755 | mAP 0.794 
+2020-04-20-09-17: epoch 286: train | loss 0.214 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-19: epoch 287: train | loss 0.218 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.107 | epoch_time 1.65min 
+2020-04-20-09-20: epoch 288: train | loss 0.210 | class_loss 0.004 | score_loss 0.103 | bbox_loss 0.103 | epoch_time 1.65min 
+2020-04-20-09-22: epoch 289: train | loss 0.213 | class_loss 0.004 | score_loss 0.104 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-24: epoch 290: train | loss 0.216 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-09-24: epoch 290: val   | loss 0.307 | class_loss 0.025 | score_loss 0.126 | bbox_loss 0.157 | epoch_time 0.69min 
+2020-04-20-09-26: epoch 290: val   | Car_easy 0.914 | Car_moderate 0.878 | Car_hard 0.785 | Pedestrian_easy 0.821 | Pedestrian_moderate 0.745 | Pedestrian_hard 0.715 | Cyclist_easy 0.810 | Cyclist_moderate 0.764 | Cyclist_hard 0.752 | mAP 0.798 
+2020-04-20-09-28: epoch 291: train | loss 0.214 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.104 | epoch_time 1.65min 
+2020-04-20-09-30: epoch 292: train | loss 0.215 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-31: epoch 293: train | loss 0.213 | class_loss 0.003 | score_loss 0.105 | bbox_loss 0.104 | epoch_time 1.65min 
+2020-04-20-09-33: epoch 294: train | loss 0.215 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.106 | epoch_time 1.65min 
+2020-04-20-09-35: epoch 295: train | loss 0.214 | class_loss 0.004 | score_loss 0.106 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-35: epoch 295: val   | loss 0.308 | class_loss 0.025 | score_loss 0.124 | bbox_loss 0.159 | epoch_time 0.70min 
+2020-04-20-09-38: epoch 295: val   | Car_easy 0.905 | Car_moderate 0.876 | Car_hard 0.783 | Pedestrian_easy 0.816 | Pedestrian_moderate 0.744 | Pedestrian_hard 0.673 | Cyclist_easy 0.819 | Cyclist_moderate 0.773 | Cyclist_hard 0.747 | mAP 0.793 
+2020-04-20-09-39: epoch 296: train | loss 0.214 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.105 | epoch_time 1.64min 
+2020-04-20-09-41: epoch 297: train | loss 0.213 | class_loss 0.004 | score_loss 0.104 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-43: epoch 298: train | loss 0.212 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.103 | epoch_time 1.65min 
+2020-04-20-09-44: epoch 299: train | loss 0.214 | class_loss 0.004 | score_loss 0.105 | bbox_loss 0.105 | epoch_time 1.65min 
+2020-04-20-09-46: epoch 300: train | loss 0.212 | class_loss 0.003 | score_loss 0.105 | bbox_loss 0.104 | epoch_time 1.65min 
+2020-04-20-09-47: epoch 300: val   | loss 0.309 | class_loss 0.025 | score_loss 0.126 | bbox_loss 0.157 | epoch_time 0.72min 
+2020-04-20-09-49: epoch 300: val   | Car_easy 0.912 | Car_moderate 0.875 | Car_hard 0.783 | Pedestrian_easy 0.810 | Pedestrian_moderate 0.739 | Pedestrian_hard 0.668 | Cyclist_easy 0.834 | Cyclist_moderate 0.776 | Cyclist_hard 0.761 | mAP 0.796 

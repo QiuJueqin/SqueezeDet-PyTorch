@@ -1,3 +1,9 @@
+<div align="center">
+<img src="README/squeezedet_pytorch.gif" width="960">
+</div>
+
+
+
 # Introduction
 
 An unofficial PyTorch reimplementation of [SqueezeDet](https://arxiv.org/abs/1612.01051), with better performance on KITTI benchmark than the official [Tensorflow version](https://github.com/BichenWuUCB/squeezeDet) (and cleaner codes!)
@@ -30,7 +36,7 @@ KITTI dataset, 1248\*384 resolution:
 |        Machine        |                    Time                     |
 |-----------------------|---------------------------------------------|
 | V100 + 256G RAM + SSD |  ~36s/epoch (3740 images, 20 batch size)   |
-| 1060 + 16G RAM + HDD  |  ~196s/epoch (3740 images, 16 batch size)  |
+| 1060 + 16G RAM + HDD  |  ~95s/epoch (3740 images, 16 batch size)  |
 
 ### Inference
 
@@ -38,7 +44,7 @@ KITTI dataset, 1248\*384 resolution:
 
 |        Machine        |                 Time                |
 |-----------------------|-------------------------------------|
-| V100 + 256G RAM + SSD |  108FPS (4 threads, 20 batch size)  |
+| V100 + 256G RAM + SSD |  117FPS (8 threads, 20 batch size)  |
 | 1060 + 16G RAM + HDD  |  58FPS (4 threads, 20 batch size)   |
 
 
@@ -79,7 +85,9 @@ python main.py demo
 
 That's it. All pre-trained model and sample images have been included in the repo. If everything goes well you will see detection results like this:
 
+<div align="center">
 <img src="README/002506.png" width="960">
+</div>
 
 By default we use CPU in demo mode. Set `gpus` to 0 in [demo.py](src/demo.py#L20) to use GPU.
 
@@ -112,7 +120,7 @@ By default we use CPU in demo mode. Set `gpus` to 0 in [demo.py](src/demo.py#L20
 
   A `train.txt` and a `val.txt` files will be generated that record the sample IDs for training and validation sets. Now the structure of your data folder should look like:
 
-  ```Shell
+  ```plain
   $ROOT_DIT/data/kitti/
                     |--training/
                     |     |-- image_2/00****.png
@@ -185,12 +193,14 @@ By default we use CPU in demo mode. Set `gpus` to 0 in [demo.py](src/demo.py#L20
                [--gpus GPUS] [--num_workers NUM_WORKERS]
                [--not_cuda_benchmark] [--seed SEED]
                mode
-  ...
+  ...               
   ```
 
-  Here are loss curve and mAP curve during one training process:
+  Here are loss curve and mAP curve from one training process:
 
+  <div align="center">
   <img src="README/loss_mAP.png" width="960">
+  </div>
   
 #### COCO
 
@@ -198,7 +208,7 @@ TODO
 
 ### Train on your own dataset
 
-- Create a dataset class inherited from [BaseDataset](src/datasets/base.py#L10), with your own images and annotations loading methods. See [kitti.py](src/datasets/kitti.py) for reference.
+- Create a dataset class inherited from [`BaseDataset`](src/datasets/base.py#L10), with your own images and annotations loading methods. See [kitti.py](src/datasets/kitti.py) for reference.
 
 - Register new dataset in [`load_dataset`](src/utils/misc.py#L19) function.
 
@@ -214,6 +224,13 @@ TODO
   ```Shell
   cd $ROOT_DIR/src/utils
   python compute_dataset_seed_anchors.py
+  ```
+
+- Start training:
+
+  ```Shell
+  cd $ROOT_DIR/src
+  python main.py train --dataset YOUR_DATASET
   ```
 
 
