@@ -24,7 +24,7 @@ def train(cfg):
 
     model = SqueezeDetWithLoss(cfg)
     if cfg.load_model != '':
-        if 'f364aa15' in cfg.load_model:
+        if cfg.load_model.endswith('f364aa15.pth') or cfg.load_model.endswith('a815701f.pth'):
             model = load_official_model(model, cfg.load_model)
         else:
             model = load_model(model, cfg.load_model)

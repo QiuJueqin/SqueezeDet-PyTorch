@@ -49,4 +49,4 @@ def demo(cfg):
         inp = {'image': image,
                'image_meta': image_meta}
 
-        _ = detector.detect(inp)[0]
+        _ = detector.detect(inp)

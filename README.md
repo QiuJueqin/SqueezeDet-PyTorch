@@ -21,11 +21,6 @@ Currently only SqueezeDet architecture is supported. SqueezeDet+ is coming soon.
 |  This repo  | **92.8** / **88.7** / **79.0** | 82.1 / 75.4 / **72.5** | **82.3** / **76.9** / **73.8** |  **80.4**  |
 |    Paper    |        90.2 / 84.7 / 73.9      | **82.9** / 75.4 / 72.1 |       77.1 / 68.3 / 65.8       |    76.7    |
 
-### COCO 2017
-
-TODO
-
-
 
 # Speed
 
@@ -33,19 +28,19 @@ TODO
 
 KITTI dataset, 1248\*384 resolution:
 
-|        Machine        |                    Time                     |
-|-----------------------|---------------------------------------------|
-| V100 + 256G RAM + SSD |  ~36s/epoch (3740 images, 20 batch size)   |
-| 1060 + 16G RAM + HDD  |  ~95s/epoch (3740 images, 16 batch size)  |
+|   Machine    |                    Time                     |
+|--------------|---------------------------------------------|
+|  V100 + SSD  |   ~36s/epoch (3740 images, 20 batch size)   |
+|  1060 + HDD  |   ~95s/epoch (3740 images, 16 batch size)   |
 
 ### Inference
 
 KITTI dataset, 1248\*384 resolution:
 
-|        Machine        |                 Time                |
-|-----------------------|-------------------------------------|
-| V100 + 256G RAM + SSD |  117FPS (8 threads, 20 batch size)  |
-| 1060 + 16G RAM + HDD  |  58FPS (4 threads, 20 batch size)   |
+|   Machine    |                 Time                |
+|--------------|-------------------------------------|
+|  V100 + SSD  |  117FPS (8 threads, 20 batch size)  |
+|  1060 + HDD  |  58FPS (4 threads, 20 batch size)   |
 
 
 
@@ -201,10 +196,6 @@ By default we use CPU in demo mode. Set `gpus` to 0 in [demo.py](src/demo.py#L20
   <div align="center">
   <img src="README/loss_mAP.png" width="960">
   </div>
-  
-#### COCO
-
-TODO
 
 ### Train on your own dataset
 
