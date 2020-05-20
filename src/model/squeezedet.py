@@ -90,9 +90,9 @@ class SqueezeDetBase(nn.Module):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 if m is self.convdet:
-                    nn.init.normal_(m.weight, mean=0.0, std=0.001)
+                    nn.init.normal_(m.weight, mean=0.0, std=0.002)
                 else:
-                    nn.init.normal_(m.weight, mean=0.0, std=0.01)
+                    nn.init.normal_(m.weight, mean=0.0, std=0.005)
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0)
 

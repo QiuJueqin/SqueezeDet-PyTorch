@@ -15,14 +15,18 @@ class BaseDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, index):
         image, image_id = self.load_image(index)
+        gt_class_ids, gt_boxes = self.load_annotations(index)
+
         image_meta = {'index': index,
                       'image_id': image_id,
                       'orig_size': np.array(image.shape, dtype=np.int32)}
-
-        gt_class_ids, gt_boxes = self.load_annotations(index)
         
         image, image_meta, gt_boxes = self.preprocess(image, image_meta, gt_boxes)
         gt = self.prepare_annotations(gt_class_ids, gt_boxes)
+
+        inp = {'image': image.transpose(2, 0, 1),
+               'image_meta': image_meta,
+               'gt': gt}
 
         if self.cfg.debug == 1:
             image = image * image_meta['rgb_std'] + image_meta['rgb_mean']
@@ -31,11 +35,7 @@ class BaseDataset(torch.utils.data.Dataset):
                             class_names=self.class_names,
                             save_path=save_path)
 
-        batch = {'image': image.transpose(2, 0, 1),
-                 'image_meta': image_meta,
-                 'gt': gt}
-
-        return batch
+        return inp
 
     def __len__(self):
         return len(self.sample_ids)

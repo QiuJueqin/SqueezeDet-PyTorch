@@ -116,7 +116,6 @@ class Config(object):
         cfg.save_dir = os.path.join(cfg.exp_dir, cfg.exp_id)
         cfg.debug_dir = os.path.join(cfg.save_dir, 'debug')
         print('The results will be saved to ', cfg.save_dir)
-
         return cfg
 
     @staticmethod
@@ -137,4 +136,3 @@ class Config(object):
         for name in sorted(names):
             if not name.startswith('_'):
                 print('{:<30} {}'.format(name, getattr(cfg, name)))
-        print('/n')
