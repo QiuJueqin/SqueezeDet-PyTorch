@@ -1,60 +1,60 @@
-torch version: 1.1.0
-cudnn version: 7501
-cmd: ['main.py']
+torch version: 1.5.0
+cudnn version: 7605
+cmd: ['main.py', 'train', '--load_model', '../models/imagenet/squeezenet1_1-f364aa15.pth', '--exp_id', 'my_train']
 
 config:
-anchors: [[   8.    8.   34.   30.]
- [   8.    8.   75.   45.]
- [   8.    8.   38.   90.]
+anchors: [[  8.   8.   9.   9.]
+ [  8.   8.  26.  26.]
+ [  8.   8.  62.  39.]
  ...
- [1240.  376.  194.  178.]
- [1240.  376.  283.  156.]
- [1240.  376.  381.  185.]]
+ [440. 248. 206. 111.]
+ [440. 248. 227. 209.]
+ [440. 248. 376. 188.]]
 anchors_per_grid: 9
 arch: squeezedet
-batch_size: 16
-bbox_loss_weight: 6.0
-chunk_sizes: [16]
+batch_size: 32
+bbox_loss_weight: 20.0
+chunk_sizes: [32]
 class_loss_weight: 1.0
-class_names: ('Car', 'Pedestrian', 'Cyclist')
-data_dir: /home/qiujueqin/PycharmProjects/squeezedet/data
-dataset: kitti
-debug: 0
-debug_dir: /home/qiujueqin/PycharmProjects/squeezedet/exp/my_train/debug
+class_names: ('bike', 'car', 'bus')
+data_dir: /home/ahmad/projects/SqueezeDet-PyTorch/data
+dataset: yolo
+debug: 1
+debug_dir: /home/ahmad/projects/SqueezeDet-PyTorch/exp/my_train/debug
 device: cuda
 drift_prob: 1.0
-dropout_prob: 0.5
-exp_dir: /home/qiujueqin/PycharmProjects/squeezedet/exp
+dropout_prob: 0
+exp_dir: /home/ahmad/projects/SqueezeDet-PyTorch/exp
 exp_id: my_train
 flip_prob: 0.5
 forbid_resize: False
 gpus: [0]
 gpus_str: 0
 grad_norm: 5.0
-input_size: (384, 1248)
+input_size: (256, 448)
 keep_top_k: 64
 load_model: ../models/imagenet/squeezenet1_1-f364aa15.pth
 lr: 0.01
-master_batch_size: 16
+master_batch_size: 32
 mode: train
 momentum: 0.9
 negative_score_loss_weight: 100.0
 nms_thresh: 0.4
 no_eval: False
 not_cuda_benchmark: False
-num_anchors: 16848
+num_anchors: 4032
 num_classes: 3
-num_epochs: 300
+num_epochs: 100
 num_iters: -1
 num_workers: 4
 positive_score_loss_weight: 3.75
 print_interval: 10
-rgb_mean: [[[93.877 98.801 95.923]]]
-rgb_std: [[[78.782 80.13  81.2  ]]]
-root_dir: /home/qiujueqin/PycharmProjects/squeezedet
-save_dir: /home/qiujueqin/PycharmProjects/squeezedet/exp/my_train
+rgb_mean: [[[102.45806  101.32921   96.514175]]]
+rgb_std: [[[55.937668 55.42519  56.549007]]]
+root_dir: /home/ahmad/projects/SqueezeDet-PyTorch
+save_dir: /home/ahmad/projects/SqueezeDet-PyTorch/exp/my_train
 save_intervals: 1
 score_thresh: 0.3
 seed: 42
-val_intervals: 5
+val_intervals: 1
 weight_decay: 0.0001

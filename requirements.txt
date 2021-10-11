@@ -5,9 +5,9 @@ decorator==4.4.2
 imageio==2.8.0
 kiwisolver==1.1.0
 matplotlib==3.2.0rc1
-mkl-fft==1.0.15
-mkl-random==1.1.0
-mkl-service==2.3.0
+mkl-fft
+mkl-random
+mkl-service
 networkx==2.4
 numpy==1.18.1
 olefile==0.46
@@ -15,7 +15,7 @@ opencv-python==4.2.0.34
 Pillow==6.2.2
 progress==1.5
 progressbar==2.5
-pycocotools==2.0
+pycocotools
 pycparser==2.20
 pyparsing==2.4.6
 python-dateutil==2.8.1
@@ -23,6 +23,6 @@ PyWavelets==1.1.1
 scikit-image==0.16.2
 scipy==1.4.1
 six==1.14.0
-torch==1.1.0
-torchvision==0.3.0
-tqdm==4.45.0
+torch==1.5.0
+torchvision==0.6.0
+tqdm
