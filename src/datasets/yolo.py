@@ -6,27 +6,38 @@ import skimage.io
 
 from datasets.base import BaseDataset
 from utils.boxes import generate_anchors
+from PIL import Image
+from torchvision.datasets.folder import default_loader
 
 
-class KITTI(BaseDataset):
+class YOLO(BaseDataset):
     def __init__(self, phase, cfg):
-        super(KITTI, self).__init__(phase, cfg)
+        super(YOLO, self).__init__(phase, cfg)
 
-        self.input_size = (384, 1248)  # (height, width), both dividable by 16
-        self.class_names = ('Car', 'Pedestrian', 'Cyclist')
-        self.rgb_mean = np.array([93.877, 98.801, 95.923], dtype=np.float32).reshape(1, 1, 3)
-        self.rgb_std = np.array([78.782, 80.130, 81.200], dtype=np.float32).reshape(1, 1, 3)
-
+        self.input_size = (256, 448)  # (height, width), both dividable by 16
+        self.class_names = ('bike', 'car', 'bus')
+        # real_filtered mean and std
+        # self.rgb_mean = np.array([94.87347, 96.89165, 94.70493], dtype=np.float32).reshape(1, 1, 3)
+        # self.rgb_std = np.array([53.869507, 53.936283, 55.2807], dtype=np.float32).reshape(1, 1, 3)
+        
+        # real_filtered plus all_sites_seatbelt mean and std
+        self.rgb_mean = np.array([104.90631, 105.41336, 104.70162], dtype=np.float32).reshape(1, 1, 3)
+        self.rgb_std = np.array([50.69564, 49.60443, 50.158844], dtype=np.float32).reshape(1, 1, 3)
         self.num_classes = len(self.class_names)
         self.class_ids_dict = {cls_name: cls_id for cls_id, cls_name in enumerate(self.class_names)}
 
-        self.data_dir = os.path.join(cfg.data_dir, 'kitti')
+        self.data_dir = os.path.join(cfg.data_dir, 'new_trajectory_data_5percentofwidth_filtered/redspeed')
         self.sample_ids, self.sample_set_path = self.get_sample_ids()
 
-        self.grid_size = tuple(x // 16 for x in self.input_size)  # anchors grid
-        self.anchors_seed = np.array([[34, 30], [75, 45], [38, 90],
-                                      [127, 68], [80, 174], [196, 97],
-                                      [194, 178], [283, 156], [381, 185]], dtype=np.float32)
+        self.grid_size = tuple(x // 16 for x in self.input_size)  # anchors grid 
+        # self.anchors_seed = np.array([[ 29, 17], [46, 32], [69, 52],
+        #                                 [109, 68], [84, 127], [155, 106], 
+        #                                 [255, 145], [183, 215], [371, 221]], dtype=np.float32) ## real_filtered anchors
+        
+        self.anchors_seed = np.array( [[ 32, 20], [ 61, 42], [ 59, 97],
+                                        [103, 66], [122, 114], [183, 96],
+                                        [160, 152], [211, 201], [343, 205]], dtype=np.float32) ## real_filtered plus all_sites_seatbelt anchors
+
         self.anchors = generate_anchors(self.grid_size, self.input_size, self.anchors_seed)
         self.anchors_per_grid = self.anchors_seed.shape[0]
         self.num_anchors = self.anchors.shape[0]
@@ -48,11 +59,15 @@ class KITTI(BaseDataset):
 
     def load_image(self, index):
         image_id = self.sample_ids[index]
-        image_path = os.path.join(self.data_dir, 'training/image_2', image_id + '.png')
-        image = skimage.io.imread(image_path).astype(np.float32)
+        image_path = os.path.join(self.data_dir, 'training/image_2', image_id + '.jpg')
+        image = default_loader(image_path)
+        if image.mode == 'L':
+            image = image.convert('RGB')
+        image = np.array(image).astype(np.float32)
+        # image = skimage.io.imread(image_path).astype(np.float32)
         return image, image_id
 
-    def load_annotations(self, index, _, __):
+    def load_annotations(self, index):
         ann_id = self.sample_ids[index]
         ann_path = os.path.join(self.data_dir, 'training/label_2', ann_id + '.txt')
         with open(ann_path, 'r') as fp:
@@ -64,11 +79,18 @@ class KITTI(BaseDataset):
             if ann[0] not in self.class_names:
                 continue
             class_ids.append(self.class_ids_dict[ann[0]])
-            boxes.append([float(x) for x in ann[4:8]])
+            box = [float(x) for x in ann[4:8]]
+            # if box[2] <= 0:
+            #     box[2] = 0.00001
+            # if box[3] <= 0:
+            #     box[3] = 0.00001
+            boxes.append(box)
 
         class_ids = np.array(class_ids, dtype=np.int16)
         boxes = np.array(boxes, dtype=np.float32)
-
+        if len(boxes):
+            return class_ids, boxes
+        boxes = None
         return class_ids, boxes
 
     # ========================================

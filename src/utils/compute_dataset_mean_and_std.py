@@ -19,7 +19,7 @@ class DatasetWrapper(torch.utils.data.Dataset):
         return len(self.dataset)
 
 
-def compute_dataset_mean_and_std(dataset, max_num_samples=30000, num_workers=4):
+def compute_dataset_mean_and_std(dataset, max_num_samples=20000, num_workers=4):
     """
     :param dataset: instance of torch.utils.data.Dataset class
     :param max_num_samples: randomly select N samples instead of whole dataset
@@ -30,7 +30,8 @@ def compute_dataset_mean_and_std(dataset, max_num_samples=30000, num_workers=4):
     dataloader = torch.utils.data.DataLoader(DatasetWrapper(dataset),
                                              batch_size=1,
                                              num_workers=num_workers,
-                                             pin_memory=True)
+                                             pin_memory=True,
+                                             shuffle=True)
 
     dataset_mean, dataset_std = [], []
     for image in tqdm.tqdm(dataloader):
@@ -45,7 +46,7 @@ def compute_dataset_mean_and_std(dataset, max_num_samples=30000, num_workers=4):
 
 
 def main():
-    cfg = Config().parse('eval --dataset kitti'.split(' '))
+    cfg = Config().parse('eval --dataset yolo'.split(' '))
     dataset = load_dataset(cfg.dataset)('trainval', cfg)
 
     mean, std = compute_dataset_mean_and_std(dataset)

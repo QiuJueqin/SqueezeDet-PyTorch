@@ -9,11 +9,11 @@ class Config(object):
         # basic experiment setting
         self.parser.add_argument('mode',
                                  help='train | eval | demo')
-        self.parser.add_argument('--dataset', default='kitti',
-                                 help='coco | kitti')
+        self.parser.add_argument('--dataset', default='yolo',
+                                 help='coco | kitti | yolo' )
         self.parser.add_argument('--load_model', default='',
                                  help='path to pre-trained model')
-        self.parser.add_argument('--debug', type=int, default=0,
+        self.parser.add_argument('--debug', type=int, default=2,
                                  help='0: show nothing\n'
                                       '1: visualize pre-processed image and boxes\n'
                                       '2: visualize detections.')
@@ -22,11 +22,11 @@ class Config(object):
         # model
         self.parser.add_argument('--arch', default='squeezedet',
                                  help='model architecture: squeezedet | squeezedetplus')
-        self.parser.add_argument('--dropout_prob', type=float, default=0.5,
+        self.parser.add_argument('--dropout_prob', type=float, default=0,
                                  help='probability of dropout.')
 
         # train
-        self.parser.add_argument('--lr', type=float, default=0.01,
+        self.parser.add_argument('--lr', type=float, default=0.001,
                                  help='learning rate for batch size 32.')
         self.parser.add_argument('--momentum', type=float, default=0.9,
                                  help='momentum of SGD.')
@@ -34,21 +34,21 @@ class Config(object):
                                  help='weight decay of SGD.')
         self.parser.add_argument('--grad_norm', type=float, default=5.,
                                  help='max norm of the gradients.')
-        self.parser.add_argument('--num_epochs', type=int, default=300,
+        self.parser.add_argument('--num_epochs', type=int, default=100,
                                  help='total training epochs.')
         self.parser.add_argument('--num_iters', type=int, default=-1,
                                  help='default: #samples / batch_size.')
-        self.parser.add_argument('--batch_size', type=int, default=20,
+        self.parser.add_argument('--batch_size', type=int, default=32,
                                  help='batch size')
         self.parser.add_argument('--master_batch_size', type=int, default=-1,
                                  help='batch size on the master gpu.')
         self.parser.add_argument('--save_intervals', type=int, default=1,
                                  help='number of epochs to save model.')
-        self.parser.add_argument('--val_intervals', type=int, default=5,
+        self.parser.add_argument('--val_intervals', type=int, default=1,
                                  help='number of epochs to run validation.')
         self.parser.add_argument('--no_eval', action='store_true',
                                  help='bypass mAP evaluation during training.')
-        self.parser.add_argument('--print_interval', type=int, default=10,
+        self.parser.add_argument('--print_interval', type=int, default=20,
                                  help='disable progress bar and print to screen.')
         self.parser.add_argument('--flip_prob', type=float, default=0.5,
                                  help='probability of horizontal flip during training.')
@@ -63,13 +63,13 @@ class Config(object):
                                  help='positive weight of score prediction loss.')
         self.parser.add_argument('--negative_score_loss_weight', type=float, default=100.,
                                  help='negative weight of score prediction loss.')
-        self.parser.add_argument('--bbox_loss_weight', type=float, default=6.,
+        self.parser.add_argument('--bbox_loss_weight', type=float, default=20.,
                                  help='weight of boxes regression loss.')
 
         # inference
-        self.parser.add_argument('--nms_thresh', type=float, default=0.4,
+        self.parser.add_argument('--nms_thresh', type=float, default=0.3,
                                  help='discards all overlapping boxes with IoU < nms_thresh.')
-        self.parser.add_argument('--score_thresh', type=float, default=0.3,
+        self.parser.add_argument('--score_thresh', type=float, default=0.55,
                                  help='discards all boxes with scores smaller than score_thresh.')
         self.parser.add_argument('--keep_top_k', type=int, default=64,
                                  help='keep top k detections before nms.')

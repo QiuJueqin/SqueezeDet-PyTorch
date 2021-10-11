@@ -33,7 +33,7 @@ def train(cfg):
                                 lr=cfg.lr,
                                 momentum=cfg.momentum,
                                 weight_decay=cfg.weight_decay)
-    lr_scheduler = StepLR(optimizer, 60, gamma=0.5)
+    lr_scheduler = StepLR(optimizer, 20, gamma=0.5)
 
     trainer = Trainer(model, optimizer, lr_scheduler, cfg)
 

@@ -11,8 +11,8 @@ EPSILON = 1E-10
 
 def xyxy_to_xywh(boxes_xyxy):
     assert np.ndim(boxes_xyxy) == 2
-    assert np.all(boxes_xyxy[:, 0] < boxes_xyxy[:, 2])
-    assert np.all(boxes_xyxy[:, 1] < boxes_xyxy[:, 3])
+    # assert np.all(boxes_xyxy[:, 0] < boxes_xyxy[:, 2])
+    # assert np.all(boxes_xyxy[:, 1] < boxes_xyxy[:, 3])
 
     return np.concatenate([
         (boxes_xyxy[:, [0]] + boxes_xyxy[:, [2]]) / 2.,
@@ -24,7 +24,7 @@ def xyxy_to_xywh(boxes_xyxy):
 
 def xywh_to_xyxy(boxes_xywh):
     assert np.ndim(boxes_xywh) == 2
-    assert np.all(boxes_xywh > 0)
+    # assert np.all(boxes_xywh > 0)
 
     return np.concatenate([
         boxes_xywh[:, [0]] - 0.5 * (boxes_xywh[:, [2]] - 1),
@@ -170,32 +170,33 @@ def boxes_postprocess(boxes, image_meta):
 
 def visualize_boxes(image, class_ids, boxes, scores=None, class_names=None, save_path=None, show=False):
     image = image.astype(np.uint8)
-    num_boxes = boxes.shape[0]
-    for i in range(num_boxes):
-        class_id = class_ids[i]
-        bbox = boxes[i].astype(np.uint32).tolist()
-        image = cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]),
-                              class_colors[class_id].tolist(), 2)
+    if boxes is not None:
+        num_boxes = boxes.shape[0]
+        for i in range(num_boxes):
+            class_id = class_ids[i]
+            bbox = boxes[i].astype(np.uint32).tolist()
+            image = cv2.rectangle(image, (bbox[0], bbox[1]), (bbox[2], bbox[3]),
+                                class_colors[class_id].tolist(), 2)
 
-        class_name = class_names[class_id] if class_names is not None else 'class_{}'.format(class_id)
-        text = '{} {:.2f}'.format(class_name, scores[i]) if scores is not None else class_name
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        text_size = cv2.getTextSize(text, font, fontScale=.5, thickness=1)[0]
-        image = cv2.rectangle(image,
-                              (bbox[0], bbox[1] - text_size[1] - 8),
-                              (bbox[0] + text_size[0] + 8, bbox[1]),
-                              class_colors[class_id].tolist(), -1)
-        image = cv2.putText(image, text, (bbox[0] + 4, bbox[1] - 4), font,
-                            fontScale=.5, color=(255, 255, 255), thickness=1, lineType=cv2.LINE_AA)
+            class_name = class_names[class_id] if class_names is not None else 'class_{}'.format(class_id)
+            text = '{} {:.2f}'.format(class_name, scores[i]) if scores is not None else class_name
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            text_size = cv2.getTextSize(text, font, fontScale=.5, thickness=1)[0]
+            image = cv2.rectangle(image,
+                                (bbox[0], bbox[1] - text_size[1] - 8),
+                                (bbox[0] + text_size[0] + 8, bbox[1]),
+                                class_colors[class_id].tolist(), -1)
+            image = cv2.putText(image, text, (bbox[0] + 4, bbox[1] - 4), font,
+                                fontScale=.5, color=(255, 255, 255), thickness=1, lineType=cv2.LINE_AA)
 
-    if show:
-        title = '{} (press any key to continue)'.format(os.path.basename(save_path))
-        cv2.imshow(title, image[:, :, ::-1])
-        cv2.waitKey()
-        cv2.destroyWindow(title)
-    else:
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        cv2.imwrite(save_path, image[:, :, ::-1])
+        if show:
+            title = '{} (press any key to continue)'.format(os.path.basename(save_path))
+            cv2.imshow(title, image[:, :, ::-1])
+            cv2.waitKey()
+            cv2.destroyWindow(title)
+        else:
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            cv2.imwrite(save_path, image[:, :, ::-1])
 
 
 class_colors = (255. * np.array(

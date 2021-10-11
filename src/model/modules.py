@@ -4,8 +4,8 @@ EPSILON = 1E-10
 
 
 def xyxy_to_xywh(boxes_xyxy):
-    assert torch.all(boxes_xyxy[..., 0] < boxes_xyxy[..., 2])
-    assert torch.all(boxes_xyxy[..., 1] < boxes_xyxy[..., 3])
+    # assert torch.all(boxes_xyxy[..., 0] < boxes_xyxy[..., 2])
+    # assert torch.all(boxes_xyxy[..., 1] < boxes_xyxy[..., 3])
     return torch.cat([
         (boxes_xyxy[..., [0]] + boxes_xyxy[..., [2]]) / 2.,
         (boxes_xyxy[..., [1]] + boxes_xyxy[..., [3]]) / 2.,
@@ -15,7 +15,7 @@ def xyxy_to_xywh(boxes_xyxy):
 
 
 def xywh_to_xyxy(boxes_xywh):
-    assert torch.all(boxes_xywh[..., [2, 3]] > 0)
+    # assert torch.all(boxes_xywh[..., [2, 3]] > 0)
     return torch.cat([
         boxes_xywh[..., [0]] - 0.5 * (boxes_xywh[..., [2]] - 1),
         boxes_xywh[..., [1]] - 0.5 * (boxes_xywh[..., [3]] - 1),

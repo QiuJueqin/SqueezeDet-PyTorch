@@ -3,7 +3,7 @@ import numpy as np
 
 
 def main():
-    image_set_dir = '../../data/kitti/image_sets'
+    image_set_dir = '../../data/all_real_yolo_format_mapped/image_sets'
     trainval_file = os.path.join(image_set_dir, 'trainval.txt')
     train_file = os.path.join(image_set_dir, 'train.txt')
     val_file = os.path.join(image_set_dir, 'val.txt')
@@ -14,9 +14,9 @@ def main():
             idx.append(line.strip())
 
     idx = np.random.permutation(idx)
-
-    train_idx = sorted(idx[:len(idx) // 2])
-    val_idx = sorted(idx[len(idx) // 2:])
+    split = 0.9
+    train_idx = sorted(idx[:int(len(idx)* split)])
+    val_idx = sorted(idx[int(len(idx) * split):])
 
     with open(train_file, 'w') as f:
         for i in train_idx:

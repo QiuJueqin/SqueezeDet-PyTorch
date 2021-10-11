@@ -7,19 +7,20 @@ import skimage.io
 import torch
 import torch.utils.data
 
-from datasets.kitti import KITTI
+from datasets.yolo import YOLO
 from engine.detector import Detector
 from model.squeezedet import SqueezeDet
 from utils.config import Config
 from utils.model import load_model
+from PIL import Image
 
 
 def demo(cfg):
     # prepare configurations
-    cfg.load_model = '../models/squeezedet_kitti_epoch280.pth'
-    cfg.gpus = [-1]  # -1 to use CPU
+    cfg.load_model = '../exp/all_real_plus_synth_8sites_plus_seatbelt_plus_new_trajectory_data_kitti_format_5percentofwidth_filtered/model_51.pth'
+    cfg.gpus = [0]  # -1 to use CPU
     cfg.debug = 2  # to visualize detection boxes
-    dataset = KITTI('val', cfg)
+    dataset = YOLO('val', cfg)
     cfg = Config().update_dataset_info(cfg, dataset)
 
     # preprocess image to match model's input resolution
@@ -32,16 +33,21 @@ def demo(cfg):
     detector = Detector(model.to(cfg.device), cfg)
 
     # prepare images
-    sample_images_dir = '../data/samples/kitti/testing/image_2'
-    sample_image_paths = glob.glob(os.path.join(sample_images_dir, '*.png'))
+    sample_images_dir = '/media/ahmad/c179176c-2423-494f-b7c1-e50f782fbf3f/new_trajectory_data_5percentofwidth_filtered/redspeed/image_2'
+    sample_image_paths = glob.glob(os.path.join(sample_images_dir, '*.jpg'))
 
     # detection
     for path in tqdm.tqdm(sample_image_paths):
-        image = skimage.io.imread(path).astype(np.float32)
+        # image = skimage.io.imread(path).astype(np.float32)
+        image = Image.open(path)
+        if image.mode == 'L':
+            image = image.convert('RGB')
+        image = np.array(image).astype(np.float32)
+
         image_meta = {'image_id': os.path.basename(path)[:-4],
                       'orig_size': np.array(image.shape, dtype=np.int32)}
 
-        image, image_meta, _ = preprocess_func(image, image_meta)
+        image, image_meta, _, _= preprocess_func(image, image_meta)
         image = torch.from_numpy(image.transpose(2, 0, 1)).unsqueeze(0).to(cfg.device)
         image_meta = {k: torch.from_numpy(v).unsqueeze(0).to(cfg.device) if isinstance(v, np.ndarray)
                       else [v] for k, v in image_meta.items()}

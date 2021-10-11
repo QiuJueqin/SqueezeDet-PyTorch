@@ -36,6 +36,20 @@ class Detector(object):
 
             det = {k: v.cpu().numpy() for k, v in det.items()}
             det['boxes'] = boxes_postprocess(det['boxes'], image_meta)
+            
+            # for redspeed only 
+            boxes = det['boxes']
+            inds = []
+            for box in boxes:
+                if box[0] >= 0 and box[1] >= 0 and box[2] <= 430 and box[3] <= 760:
+                    inds.append(False)
+                else:
+                    inds.append(True)
+            det['boxes'] = det['boxes'][inds]
+            det['scores'] = det['scores'][inds]
+            det['class_ids'] = det['class_ids'][inds]
+            
+    
             det['image_meta'] = image_meta
             results.append(det)
 
@@ -45,8 +59,7 @@ class Detector(object):
                 visualize_boxes(image, det['class_ids'], det['boxes'], det['scores'],
                                 class_names=self.cfg.class_names,
                                 save_path=save_path,
-                                show=self.cfg.mode == 'demo')
-
+                                show=False) #self.cfg.mode == 'demo'
         return results
 
     def detect_dataset(self, dataset):
@@ -91,26 +104,34 @@ class Detector(object):
         boxes = det['boxes'][orders, :]
 
         # class-wise nms
-        filtered_class_ids, filtered_scores, filtered_boxes = [], [], []
-        for cls_id in range(self.cfg.num_classes):
-            idx_cur_class = (class_ids == cls_id)
-            if torch.sum(idx_cur_class) == 0:
-                continue
+        # filtered_class_ids, filtered_scores, filtered_boxes = [], [], []
+        # for cls_id in range(self.cfg.num_classes):
+        #     idx_cur_class = (class_ids == cls_id)
+        #     if torch.sum(idx_cur_class) == 0:
+        #         continue
 
-            class_ids_cur_class = class_ids[idx_cur_class]
-            scores_cur_class = scores[idx_cur_class]
-            boxes_cur_class = boxes[idx_cur_class, :]
+        #     class_ids_cur_class = class_ids[idx_cur_class]
+        #     scores_cur_class = scores[idx_cur_class]
+        #     boxes_cur_class = boxes[idx_cur_class, :]
 
-            keeps = nms(boxes_cur_class, scores_cur_class, self.cfg.nms_thresh)
+        #     keeps = nms(boxes_cur_class, scores_cur_class, self.cfg.nms_thresh)
 
-            filtered_class_ids.append(class_ids_cur_class[keeps])
-            filtered_scores.append(scores_cur_class[keeps])
-            filtered_boxes.append(boxes_cur_class[keeps, :])
+        #     filtered_class_ids.append(class_ids_cur_class[keeps])
+        #     filtered_scores.append(scores_cur_class[keeps])
+        #     filtered_boxes.append(boxes_cur_class[keeps, :])
 
-        filtered_class_ids = torch.cat(filtered_class_ids)
-        filtered_scores = torch.cat(filtered_scores)
-        filtered_boxes = torch.cat(filtered_boxes, dim=0)
+        # filtered_class_ids = torch.cat(filtered_class_ids)
+        # filtered_scores = torch.cat(filtered_scores)
+        # filtered_boxes = torch.cat(filtered_boxes, dim=0)
+         ##################################
 
+        # Class agnostic nms
+        keeps = nms(boxes, scores, self.cfg.nms_thresh)
+        filtered_class_ids = class_ids[keeps]
+        filtered_scores = scores[keeps]
+        filtered_boxes = boxes[keeps]
+        ##################################
+    
         keeps = filtered_scores > self.cfg.score_thresh
         if torch.sum(keeps) == 0:
             det = None
@@ -135,7 +156,7 @@ class DataWrapper(torch.utils.data.Dataset):
                       'image_id': image_id,
                       'orig_size': np.array(image.shape, dtype=np.int32)}
 
-        image, image_meta, _ = self.dataset.preprocess(image, image_meta)
+        image, image_meta, gt_boxes, gt_class_ids = self.dataset.preprocess(image, image_meta)
 
         batch = {'image': image.transpose(2, 0, 1),
                  'image_meta': image_meta}

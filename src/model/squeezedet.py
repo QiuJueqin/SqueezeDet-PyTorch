@@ -141,6 +141,7 @@ class Loss(nn.Module):
         pred_class_probs, pred_log_class_probs, pred_scores, pred_deltas, pred_boxes = self.resolver(pred)
 
         num_objects = torch.sum(anchor_masks, dim=[1, 2])
+        num_objects = num_objects + 1
         overlaps = compute_overlaps(gt_boxes, pred_boxes) * anchor_masks
 
         class_loss = torch.sum(
