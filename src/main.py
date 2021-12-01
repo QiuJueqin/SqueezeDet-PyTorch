@@ -1,5 +1,7 @@
 from utils.config import Config
 from utils.misc import init_env
+import warnings
+warnings.filterwarnings("ignore")
 
 
 cfg = Config().parse()

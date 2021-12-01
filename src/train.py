@@ -25,9 +25,9 @@ def train(cfg):
     model = SqueezeDetWithLoss(cfg)
     if cfg.load_model != '':
         if cfg.load_model.endswith('f364aa15.pth') or cfg.load_model.endswith('a815701f.pth'):
-            model = load_official_model(model, cfg.load_model)
+            model = load_official_model(model, cfg.load_model, cfg)
         else:
-            model = load_model(model, cfg.load_model)
+            model = load_model(model, cfg.load_model, cfg)
 
     optimizer = torch.optim.SGD(model.parameters(),
                                 lr=cfg.lr,
@@ -54,8 +54,8 @@ def train(cfg):
     better_than = operator.lt if cfg.no_eval else operator.gt
 
     for epoch in range(1, cfg.num_epochs + 1):
-        train_stats = trainer.train_epoch(epoch, train_loader)
-        logger.update(train_stats, phase='train', epoch=epoch)
+        train_stats = trainer.train_epoch(epoch, train_loader, cfg=cfg)
+        logger.update(train_stats, phase='train', epoch=epoch, cfg=cfg)
 
         save_path = os.path.join(cfg.save_dir, 'model_last.pth')
         save_model(model, save_path, epoch)
@@ -65,12 +65,12 @@ def train(cfg):
             save_model(model, save_path, epoch)
 
         if cfg.val_intervals > 0 and epoch % cfg.val_intervals == 0:
-            val_stats = trainer.val_epoch(epoch, val_loader)
-            logger.update(val_stats, phase='val', epoch=epoch)
+            val_stats = trainer.val_epoch(epoch, val_loader, cfg=cfg)
+            logger.update(val_stats, phase='val', epoch=epoch, cfg=cfg)
 
             if not cfg.no_eval:
-                aps = eval_dataset(val_dataset, save_path, cfg)
-                logger.update(aps, phase='val', epoch=epoch)
+                aps = eval_dataset(val_dataset, model, cfg)
+                logger.update(aps, phase='val', epoch=epoch, cfg=cfg)
 
             value = val_stats['loss'] if cfg.no_eval else aps['mAP']
             if better_than(value, best):
@@ -79,6 +79,6 @@ def train(cfg):
                 save_model(model, save_path, epoch)
 
         logger.plot(metrics)
-        logger.print_bests(metrics)
+        logger.print_bests(metrics, cfg)
 
     torch.cuda.empty_cache()

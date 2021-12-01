@@ -36,20 +36,6 @@ class Detector(object):
 
             det = {k: v.cpu().numpy() for k, v in det.items()}
             det['boxes'] = boxes_postprocess(det['boxes'], image_meta)
-            
-            # for redspeed only 
-            boxes = det['boxes']
-            inds = []
-            for box in boxes:
-                if box[0] >= 0 and box[1] >= 0 and box[2] <= 430 and box[3] <= 760:
-                    inds.append(False)
-                else:
-                    inds.append(True)
-            det['boxes'] = det['boxes'][inds]
-            det['scores'] = det['scores'][inds]
-            det['class_ids'] = det['class_ids'][inds]
-            
-    
             det['image_meta'] = image_meta
             results.append(det)
 
@@ -60,9 +46,10 @@ class Detector(object):
                                 class_names=self.cfg.class_names,
                                 save_path=save_path,
                                 show=False) #self.cfg.mode == 'demo'
+
         return results
 
-    def detect_dataset(self, dataset):
+    def detect_dataset(self, dataset, cfg):
         start_time = time.time()
 
         data_loader = torch.utils.data.DataLoader(DataWrapper(dataset),
@@ -86,14 +73,21 @@ class Detector(object):
             net_timer.update(time.time() - end)
             end = time.time()
             if iter_id % self.cfg.print_interval == 0:
-                print('eval: [{0}/{1}] | data {2:.3f}s | net {3:.3f}s'.format(
-                    iter_id, num_iters, data_timer.val, net_timer.val))
+                msg = 'eval: [{0}/{1}] | data {2:.3f}s | net {3:.3f}s'.format(
+                    iter_id, num_iters, data_timer.val, net_timer.val)
+                # print(msg)
+                with open(cfg.log_file, 'a+') as file:
+                    file.write(msg + '\n')
 
         total_time = time.time() - start_time
         tpi = total_time / len(dataset)
-        print('Elapsed {:.2f}min ({:.1f}ms/image, {:.1f}frames/s)'.format(
-            total_time / 60., tpi * 1000., 1 / tpi))
-        print('-' * 80)
+        msg = 'Elapsed {:.2f}min ({:.1f}ms/image, {:.1f}frames/s)'.format(
+            total_time / 60., tpi * 1000., 1 / tpi)
+        # print(msg)
+        # print('-' * 80)
+        with open(cfg.log_file, 'a+') as file:
+            file.write(msg + '\n')
+            file.write('-' * 80 + '\n')
 
         return results
 
@@ -104,34 +98,26 @@ class Detector(object):
         boxes = det['boxes'][orders, :]
 
         # class-wise nms
-        # filtered_class_ids, filtered_scores, filtered_boxes = [], [], []
-        # for cls_id in range(self.cfg.num_classes):
-        #     idx_cur_class = (class_ids == cls_id)
-        #     if torch.sum(idx_cur_class) == 0:
-        #         continue
+        filtered_class_ids, filtered_scores, filtered_boxes = [], [], []
+        for cls_id in range(self.cfg.num_classes):
+            idx_cur_class = (class_ids == cls_id)
+            if torch.sum(idx_cur_class) == 0:
+                continue
 
-        #     class_ids_cur_class = class_ids[idx_cur_class]
-        #     scores_cur_class = scores[idx_cur_class]
-        #     boxes_cur_class = boxes[idx_cur_class, :]
+            class_ids_cur_class = class_ids[idx_cur_class]
+            scores_cur_class = scores[idx_cur_class]
+            boxes_cur_class = boxes[idx_cur_class, :]
 
-        #     keeps = nms(boxes_cur_class, scores_cur_class, self.cfg.nms_thresh)
+            keeps = nms(boxes_cur_class, scores_cur_class, self.cfg.nms_thresh)
 
-        #     filtered_class_ids.append(class_ids_cur_class[keeps])
-        #     filtered_scores.append(scores_cur_class[keeps])
-        #     filtered_boxes.append(boxes_cur_class[keeps, :])
+            filtered_class_ids.append(class_ids_cur_class[keeps])
+            filtered_scores.append(scores_cur_class[keeps])
+            filtered_boxes.append(boxes_cur_class[keeps, :])
 
-        # filtered_class_ids = torch.cat(filtered_class_ids)
-        # filtered_scores = torch.cat(filtered_scores)
-        # filtered_boxes = torch.cat(filtered_boxes, dim=0)
-         ##################################
+        filtered_class_ids = torch.cat(filtered_class_ids)
+        filtered_scores = torch.cat(filtered_scores)
+        filtered_boxes = torch.cat(filtered_boxes, dim=0)
 
-        # Class agnostic nms
-        keeps = nms(boxes, scores, self.cfg.nms_thresh)
-        filtered_class_ids = class_ids[keeps]
-        filtered_scores = scores[keeps]
-        filtered_boxes = boxes[keeps]
-        ##################################
-    
         keeps = filtered_scores > self.cfg.score_thresh
         if torch.sum(keeps) == 0:
             det = None

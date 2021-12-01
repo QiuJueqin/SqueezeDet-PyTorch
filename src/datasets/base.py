@@ -49,6 +49,15 @@ class BaseDataset(torch.utils.data.Dataset):
             ),
             
             iaa.Sometimes(
+                0.3,
+                iaa.OneOf([
+                    iaa.imgcorruptlike.Fog(severity=1),
+                    iaa.imgcorruptlike.Snow(severity=1),
+                    iaa.imgcorruptlike.Frost(severity=1)
+                ])
+            ),
+
+            iaa.Sometimes(
                 0.2,
                 iaa.OneOf([
                     iaa.ChangeColorTemperature((3500, 15000)),

@@ -17,7 +17,7 @@ from PIL import Image
 
 def demo(cfg):
     # prepare configurations
-    cfg.load_model = '../exp/all_real_plus_synth_8sites_plus_seatbelt_plus_new_trajectory_data_kitti_format_5percentofwidth_filtered/model_51.pth'
+    cfg.load_model = '../exp/real_filtered_3class/model_best.pth'
     cfg.gpus = [0]  # -1 to use CPU
     cfg.debug = 2  # to visualize detection boxes
     dataset = YOLO('val', cfg)
@@ -33,7 +33,7 @@ def demo(cfg):
     detector = Detector(model.to(cfg.device), cfg)
 
     # prepare images
-    sample_images_dir = '/media/ahmad/c179176c-2423-494f-b7c1-e50f782fbf3f/new_trajectory_data_5percentofwidth_filtered/redspeed/image_2'
+    sample_images_dir = '/home/hazen/workspace/datasets/redspeed/image_2'
     sample_image_paths = glob.glob(os.path.join(sample_images_dir, '*.jpg'))
 
     # detection

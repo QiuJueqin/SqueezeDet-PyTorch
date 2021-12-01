@@ -1,3 +1,4 @@
+#pragma warning(push, 0) 
 #include <iostream>
 #include <algorithm>
 #include <stdio.h>
@@ -34,7 +35,7 @@ enum CLASSES{BIKE=0, CAR=1, BUS=2};
 
 // parameters varying per class
 vector<string> CLASS_NAMES;
-const double   MIN_OVERLAP[3] = {0.8, 0.8, 0.8};                  // the minimum overlap required for evaluation
+const double   MIN_OVERLAP[3] = {0.5, 0.5, 0.5};                  // the minimum overlap required for evaluation
 
 // no. of recall steps that should be evaluated (discretized)
 const double N_SAMPLE_PTS = 41;
@@ -120,8 +121,7 @@ vector<tDetection> loadDetections(string file_name, bool &compute_aos, bool &eva
                    &d.box.x1,   &d.box.y1, &d.box.x2, &d.box.y2,
                    &trash,      &trash,    &trash,    &trash,
                    &trash,      &trash,    &trash,    &d.thresh )==16) {
-      // d.box.type = str;
-      d.box.type = "bike";
+      d.box.type = str;
       detections.push_back(d);
 
       // orientation=-10 is invalid, AOS is not evaluated if at least one orientation is invalid
@@ -160,8 +160,7 @@ vector<tGroundtruth> loadGroundtruth(string file_name,bool &success) {
                    &g.box.x1,   &g.box.y1,     &g.box.x2,    &g.box.y2,
                    &trash,      &trash,        &trash,       &trash,
                    &trash,      &trash,        &trash )==15) {
-      // g.box.type = str;
-      g.box.type = "bike";
+      g.box.type = str;
       groundtruth.push_back(g);
     }
   }
@@ -816,3 +815,4 @@ int32_t main (int32_t argc,char *argv[]) {
   return 0;
 }
 
+#pragma warning(pop)

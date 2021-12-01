@@ -15,7 +15,7 @@ class Trainer(object):
         self.set_device(cfg.gpus, cfg.chunk_sizes, cfg.device)
         self.metrics = ['loss', 'class_loss', 'score_loss', 'bbox_loss']
 
-    def run_epoch(self, phase, epoch, data_loader):
+    def run_epoch(self, phase, epoch, data_loader, cfg):
         start_time = time.time()
 
         if phase == 'train':
@@ -60,7 +60,9 @@ class Trainer(object):
 
             msg += '| data {:.1f}ms | net {:.1f}ms'.format(1000. * data_timer.val, 1000. * net_timer.val)
             if iter_id % self.cfg.print_interval == 0:
-                print(msg)
+                # print(msg)
+                with open(cfg.log_file, 'a+') as file:
+                    file.write(msg + '\n')
 
             del loss, loss_stats
 
@@ -72,12 +74,12 @@ class Trainer(object):
 
         return stats
 
-    def train_epoch(self, epoch, data_loader):
-        return self.run_epoch('train', epoch, data_loader)
+    def train_epoch(self, epoch, data_loader, cfg):
+        return self.run_epoch('train', epoch, data_loader, cfg=cfg)
 
     @torch.no_grad()
-    def val_epoch(self, epoch, data_loader):
-        return self.run_epoch('val', epoch, data_loader)
+    def val_epoch(self, epoch, data_loader, cfg):
+        return self.run_epoch('val', epoch, data_loader, cfg=cfg)
 
     def set_device(self, gpus, chunk_sizes, device):
         if len(gpus) > 1:

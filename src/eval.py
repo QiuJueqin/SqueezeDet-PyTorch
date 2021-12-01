@@ -22,11 +22,11 @@ def eval(cfg):
 
 def eval_dataset(dataset, model_path, cfg):
     model = SqueezeDet(cfg)
-    model = load_model(model, model_path)
+    model = load_model(model, model_path, cfg)
 
     detector = Detector(model, cfg)
 
-    results = detector.detect_dataset(dataset)
+    results = detector.detect_dataset(dataset, cfg)
     dataset.save_results(results)
     aps = dataset.evaluate()
 

@@ -13,7 +13,7 @@ class Config(object):
                                  help='coco | kitti | yolo' )
         self.parser.add_argument('--load_model', default='',
                                  help='path to pre-trained model')
-        self.parser.add_argument('--debug', type=int, default=2,
+        self.parser.add_argument('--debug', type=int, default=0,
                                  help='0: show nothing\n'
                                       '1: visualize pre-processed image and boxes\n'
                                       '2: visualize detections.')
@@ -67,9 +67,9 @@ class Config(object):
                                  help='weight of boxes regression loss.')
 
         # inference
-        self.parser.add_argument('--nms_thresh', type=float, default=0.3,
+        self.parser.add_argument('--nms_thresh', type=float, default=0.4,
                                  help='discards all overlapping boxes with IoU < nms_thresh.')
-        self.parser.add_argument('--score_thresh', type=float, default=0.55,
+        self.parser.add_argument('--score_thresh', type=float, default=0.5,
                                  help='discards all boxes with scores smaller than score_thresh.')
         self.parser.add_argument('--keep_top_k', type=int, default=64,
                                  help='keep top k detections before nms.')
@@ -94,8 +94,19 @@ class Config(object):
         cfg.gpus = [int(gpu) for gpu in cfg.gpus.split(',')]
         cfg.gpus = [i for i in range(len(cfg.gpus))] if cfg.gpus[0] >= 0 else [-1]
 
+        cfg.root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        cfg.data_dir = os.path.join(cfg.root_dir, 'data')
+        cfg.exp_dir = os.path.join(cfg.root_dir, 'exp')
+        cfg.save_dir = os.path.join(cfg.exp_dir, cfg.exp_id)
+        os.makedirs(cfg.save_dir, exist_ok=True)
+        cfg.log_file = os.path.join(cfg.save_dir, 'training_logs.txt')
+        os.remove(cfg.log_file) if os.path.exists(cfg.log_file) else None
+        cfg.debug_dir = os.path.join(cfg.save_dir, 'debug')
+
         if cfg.mode != 'train' and len(cfg.gpus) > 1:
-            print('Only single GPU is supported in {} mode.'.format(cfg.mode))
+            # print('Only single GPU is supported in {} mode.'.format(cfg.mode))
+            with open(cfg.log_file, 'a+') as file:
+                file.write('Only single GPU is supported in {} mode.'.format(cfg.mode)+'\n')
             cfg.gpus = [cfg.gpus[0]]
             cfg.master_batch_size = -1
 
@@ -108,14 +119,13 @@ class Config(object):
             if i < rest_batch_size % (len(cfg.gpus) - 1):
                 slave_chunk_size += 1
             cfg.chunk_sizes.append(slave_chunk_size)
-        print('training chunk_sizes:', cfg.chunk_sizes)
+        # print('training chunk_sizes:', cfg.chunk_sizes)
+        with open(cfg.log_file, 'a+') as file:
+            file.write('training chunk_sizes:'+ str(cfg.chunk_sizes) + '\n')
 
-        cfg.root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-        cfg.data_dir = os.path.join(cfg.root_dir, 'data')
-        cfg.exp_dir = os.path.join(cfg.root_dir, 'exp')
-        cfg.save_dir = os.path.join(cfg.exp_dir, cfg.exp_id)
-        cfg.debug_dir = os.path.join(cfg.save_dir, 'debug')
-        print('The results will be saved to ', cfg.save_dir)
+        # print('The results will be saved to ', cfg.save_dir)
+        with open(cfg.log_file, 'a+') as file:
+            file.write('The results will be saved to ' + cfg.save_dir + '\n')
         return cfg
 
     @staticmethod
@@ -135,4 +145,8 @@ class Config(object):
         names = list(dir(cfg))
         for name in sorted(names):
             if not name.startswith('_'):
-                print('{:<30} {}'.format(name, getattr(cfg, name)))
+                msg = '{:<30} {}'.format(name, getattr(cfg, name))
+                # print(msg)
+                with open(cfg.log_file, 'a+') as file:
+                    file.write(msg + '\n')
+                
