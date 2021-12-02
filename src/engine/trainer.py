@@ -45,8 +45,15 @@ class Trainer(object):
             if phase == 'train':
                 self.optimizer.zero_grad()
                 loss.backward()
+                throw_error = False
+                for param in self.model.parameters():
+                    if not torch.isfinite(param.grad).all():
+                        throw_error = True
+                if throw_error:
+                    self.optimizer.zero_grad()
+
                 nn.utils.clip_grad_norm_(filter(lambda p: p.requires_grad, self.model.parameters()),
-                                         self.cfg.grad_norm)
+                                        self.cfg.grad_norm)
                 self.optimizer.step()
 
             msg = 'epoch {0:<3s} {1:<5s} [{2}/{3}] '.format(str(epoch) + ':', phase, iter_id, num_iters)
@@ -60,7 +67,7 @@ class Trainer(object):
 
             msg += '| data {:.1f}ms | net {:.1f}ms'.format(1000. * data_timer.val, 1000. * net_timer.val)
             if iter_id % self.cfg.print_interval == 0:
-                # print(msg)
+                print(msg)
                 with open(cfg.log_file, 'a+') as file:
                     file.write(msg + '\n')
 

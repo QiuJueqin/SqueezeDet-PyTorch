@@ -12,13 +12,15 @@ class Fire(nn.Module):
         self.squeeze = nn.Conv2d(inplanes, squeeze_planes, kernel_size=1)
         self.expand1x1 = nn.Conv2d(squeeze_planes, expand1x1_planes, kernel_size=1)
         self.expand3x3 = nn.Conv2d(squeeze_planes, expand3x3_planes, kernel_size=3, padding=1)
-        self.activation = nn.ReLU(inplace=True)
-
+        self.activation_1 = nn.ReLU(inplace=True)
+        self.activation_2 = nn.ReLU(inplace=True)
+        self.activation_3 = nn.ReLU(inplace=True)
+        self.float_functional_simple = torch.nn.quantized.FloatFunctional()
     def forward(self, x):
-        x = self.activation(self.squeeze(x))
-        x = torch.cat([
-            self.activation(self.expand1x1(x)),
-            self.activation(self.expand3x3(x))
+        x = self.activation_1(self.squeeze(x))
+        x = self.float_functional_simple.cat([
+            self.activation_2(self.expand1x1(x)),
+            self.activation_3(self.expand3x3(x))
         ], dim=1)
         return x
 
@@ -28,11 +30,15 @@ class SqueezeDetBase(nn.Module):
         super(SqueezeDetBase, self).__init__()
         self.num_classes = cfg.num_classes
         self.num_anchors = cfg.num_anchors
+        self.quant = torch.quantization.QuantStub()
+        self.dequant = torch.quantization.DeQuantStub()
+        self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1)
+        self.relu1 = nn.ReLU(inplace=True)
 
         if cfg.arch == 'squeezedet':
             self.features = nn.Sequential(
-                nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1),
-                nn.ReLU(inplace=True),
+                # nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1),
+                # nn.ReLU(inplace=True),
                 nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
                 Fire(64, 16, 64, 64),
                 Fire(128, 16, 64, 64),
@@ -44,9 +50,10 @@ class SqueezeDetBase(nn.Module):
                 Fire(384, 48, 192, 192),
                 Fire(384, 64, 256, 256),
                 Fire(512, 64, 256, 256),
-                Fire(512, 96, 384, 384),
-                Fire(768, 96, 384, 384)
+                # Fire(512, 96, 384, 384),
+                # Fire(768, 96, 384, 384)
             )
+            out_channels = 512
         elif cfg.arch == 'squeezedetplus':
             self.features = nn.Sequential(
                 nn.Conv2d(3, 96, kernel_size=7, stride=2, padding=3),
@@ -65,26 +72,36 @@ class SqueezeDetBase(nn.Module):
                 Fire(512, 384, 256, 256),
                 Fire(512, 384, 256, 256),
             )
+            out_channels = 512
+        elif cfg.arch == 'mobilenet_v2':
+            self.features = torchvision.models.mobilenet_v2(pretrained=False).features
+            self.features = nn.Sequential(*list(self.features.children()))
+            block_14 = self.features[14]
+            block_14.conv[1][0].stride = (1, 1)
+            out_channels = 1280
         else:
             raise ValueError('Invalid architecture.')
 
         self.dropout = nn.Dropout(cfg.dropout_prob, inplace=True) \
             if cfg.dropout_prob > 0 else None
-        self.convdet = nn.Conv2d(768 if cfg.arch == 'squeezedet' else 512,
+        self.convdet = nn.Conv2d(out_channels,
                                  cfg.anchors_per_grid * (cfg.num_classes + 5),
                                  kernel_size=3, padding=1)
 
         self.init_weights()
 
     def forward(self, x):
+        x = self.quant(x)
+        x = self.conv1(x)
+        x = self.relu1(x)
         x = self.features(x)
         if self.dropout is not None:
             x = self.dropout(x)
         x = self.convdet(x)
-
         x = x.permute(0, 2, 3, 1).contiguous()
-
-        return x.view(-1, self.num_anchors, self.num_classes + 5)
+        x = x.view(-1, self.num_anchors, self.num_classes + 5)
+        x = self.dequant(x)
+        return x
 
     def init_weights(self):
         for m in self.modules():
@@ -180,12 +197,31 @@ class SqueezeDetWithLoss(nn.Module):
     def __init__(self, cfg):
         super(SqueezeDetWithLoss, self).__init__()
         self.base = SqueezeDetBase(cfg)
+        self.resolver = PredictionResolver(cfg, log_softmax=False)
         self.loss = Loss(cfg)
+        self.detect = False
 
     def forward(self, batch):
         pred = self.base(batch['image'])
-        loss, loss_stats = self.loss(pred, batch['gt'])
-        return loss, loss_stats
+        if not self.detect:
+            loss, loss_stats = self.loss(pred, batch['gt'])
+            return loss, loss_stats
+        
+        else:
+            pred_class_probs, _, pred_scores, _, pred_boxes = self.resolver(pred)
+            pred_class_probs *= pred_scores
+            pred_class_ids = torch.argmax(pred_class_probs, dim=2)
+            pred_scores = torch.max(pred_class_probs, dim=2)[0]
+            det = {'class_ids': pred_class_ids,
+                'scores': pred_scores,
+                'boxes': pred_boxes}
+            return det
+
+    def fuse_model(self):
+        torch.quantization.fuse_modules(self.base, ['conv1', 'relu1'], inplace=True)
+        for m in self.base.features:    
+            if type(m) == Fire:
+                torch.quantization.fuse_modules(m, [['squeeze', 'activation_1'], ['expand1x1', 'activation_2'], ['expand3x3', 'activation_3']] , inplace=True)
 
 
 class SqueezeDet(nn.Module):

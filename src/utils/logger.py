@@ -29,7 +29,7 @@ class Logger(object):
         self.metrics_history = {}
 
     def write(self, txt):
-        # print(txt + '\n')
+        print(txt + '\n')
         time_str = time.strftime('%Y-%m-%d-%H-%M')
         with open(os.path.join(self.log_dir, 'log.txt'), 'a') as fp:
             fp.write('{}: {}\n'.format(time_str, txt))
@@ -95,9 +95,9 @@ class Logger(object):
             best_idx = int(f(values))
             msg = 'Best {}: {:.3f} (epoch {})'.format(
                 metric, values[best_idx], epochs[best_idx])
-            # print(msg)
+            print(msg)
             with open(cfg.log_file, 'a+') as file:
                     file.write(msg + "\n")
-        # print('\n')
+        print('\n')
         with open(cfg.log_file, 'a+') as file:
                     file.write('\n')

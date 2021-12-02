@@ -5,10 +5,25 @@ import torch.nn as nn
 def load_model(model, model_path, cfg):
     checkpoint = torch.load(model_path, map_location=lambda storage, loc: storage)
     msg = 'loaded model {}, epoch {}'.format(model_path, checkpoint['epoch'])
-    # print(msg)
+    print(msg)
     with open(cfg.log_file, 'a+') as file:
         file.write(msg + '\n')
     state_dict_ = checkpoint['state_dict']
+    dt = {}
+    for k, v in state_dict_.items():
+        k = k.replace('base.features.0', 'base.conv1')
+        k = k.replace('base.features.3', 'base.features.1')
+        k = k.replace('base.features.4', 'base.features.2')
+        k = k.replace('base.features.6', 'base.features.4')
+        k = k.replace('base.features.7', 'base.features.5')
+        k = k.replace('base.features.9', 'base.features.7')
+        k = k.replace('base.features.10', 'base.features.8')
+        k = k.replace('base.features.11', 'base.features.9')
+        k = k.replace('base.features.12', 'base.features.10')
+        dt[k] = v
+
+    state_dict_ = dt
+
     state_dict = {}
     for k in state_dict_:
         if k.startswith('module') and not k.startswith('module_list'):
@@ -25,7 +40,7 @@ def load_model(model, model_path, cfg):
                 success_loaded = False
                 msg = 'Skip loading param {}, required shape{}, loaded shape{}.'.format(
                     layer, model_state_dict[layer].shape, state_dict[layer].shape)
-                # print(msg)
+                print(msg)
                 with open(cfg.log_file, 'a+') as file:
                     file.write(msg + '\n')
 
@@ -33,14 +48,14 @@ def load_model(model, model_path, cfg):
         else:
             success_loaded = False
             msg = 'Drop param {} in pre-trained model.'.format(layer)
-            # print(msg)
+            print(msg)
             with open(cfg.log_file, 'a+') as file:
                 file.write(msg + '\n')
     for layer in model_state_dict:
         if layer not in state_dict:
             success_loaded = False
             msg = 'Param {} not found in pre-trained model.'.format(layer)
-            # print(msg)
+            print(msg)
             with open(cfg.log_file, 'a+') as file:
                 file.write(msg + '\n')
             state_dict[layer] = model_state_dict[layer]
@@ -48,7 +63,7 @@ def load_model(model, model_path, cfg):
     model.load_state_dict(state_dict, strict=False)
     msg = 'Model successfully loaded.' if success_loaded else \
           'The model does not fully load the pre-trained weight.'
-    # print(msg)
+    print(msg)
 
     with open(cfg.log_file, 'a+') as file:
                 file.write(msg + '\n'+'\n')

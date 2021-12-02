@@ -20,14 +20,15 @@ def eval(cfg):
     torch.cuda.empty_cache()
 
 
-def eval_dataset(dataset, model_path, cfg):
-    model = SqueezeDet(cfg)
-    model = load_model(model, model_path, cfg)
-
+def eval_dataset(dataset, model, cfg):
+    # model = SqueezeDet(cfg)
+    # model = load_model(model, model_path, cfg)
+    detect = model.detect
+    model.detect = True
     detector = Detector(model, cfg)
 
     results = detector.detect_dataset(dataset, cfg)
     dataset.save_results(results)
     aps = dataset.evaluate()
-
+    model.detect = detect
     return aps

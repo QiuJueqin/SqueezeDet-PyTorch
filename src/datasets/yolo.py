@@ -14,29 +14,34 @@ class YOLO(BaseDataset):
     def __init__(self, phase, cfg):
         super(YOLO, self).__init__(phase, cfg)
 
-        self.input_size = (256, 448)  # (height, width), both dividable by 16
-        self.class_names = ('bike', 'car', 'bus')
+        self.input_size = (128, 128)  # (height, width), both dividable by 16
+        self.class_names = ('0')
         # real_filtered mean and std
         # self.rgb_mean = np.array([94.87347, 96.89165, 94.70493], dtype=np.float32).reshape(1, 1, 3)
         # self.rgb_std = np.array([53.869507, 53.936283, 55.2807], dtype=np.float32).reshape(1, 1, 3)
         
         # real_filtered plus all_sites_seatbelt mean and std
-        self.rgb_mean = np.array([104.90631, 105.41336, 104.70162], dtype=np.float32).reshape(1, 1, 3)
-        self.rgb_std = np.array([50.69564, 49.60443, 50.158844], dtype=np.float32).reshape(1, 1, 3)
+        # self.rgb_mean = np.array([104.90631, 105.41336, 104.70162], dtype=np.float32).reshape(1, 1, 3)
+        # self.rgb_std = np.array([50.69564, 49.60443, 50.158844], dtype=np.float32).reshape(1, 1, 3)
+
+        self.rgb_mean = np.array([97.631615, 98.70732, 98.41285], dtype=np.float32).reshape(1, 1, 3)
+        self.rgb_std = np.array([52.766678, 52.63513, 52.348827], dtype=np.float32).reshape(1, 1, 3)
+
         self.num_classes = len(self.class_names)
         self.class_ids_dict = {cls_name: cls_id for cls_id, cls_name in enumerate(self.class_names)}
 
-        self.data_dir = os.path.join(cfg.data_dir, 'all_real_plus_synth_8sites_plus_SVsynth_plus_seatbelt_plus_new_trajectory_data_kitti_format_5percentofwidth_filtered')
+        self.data_dir = os.path.join(cfg.data_dir, 'lpr_crop/merged_data')
         self.sample_ids, self.sample_set_path = self.get_sample_ids()
-
         self.grid_size = tuple(x // 16 for x in self.input_size)  # anchors grid 
         # self.anchors_seed = np.array([[ 29, 17], [46, 32], [69, 52],
         #                                 [109, 68], [84, 127], [155, 106], 
         #                                 [255, 145], [183, 215], [371, 221]], dtype=np.float32) ## real_filtered anchors
         
-        self.anchors_seed = np.array( [[ 32, 20], [ 61, 42], [ 59, 97],
-                                        [103, 66], [122, 114], [183, 96],
-                                        [160, 152], [211, 201], [343, 205]], dtype=np.float32) ## real_filtered plus all_sites_seatbelt anchors
+        # self.anchors_seed = np.array( [[ 32, 20], [ 61, 42], [ 59, 97],
+        #                                 [103, 66], [122, 114], [183, 96],
+        #                                 [160, 152], [211, 201], [343, 205]], dtype=np.float32) ## real_filtered plus all_sites_seatbelt anchors
+
+        self.anchors_seed = np.array([[6, 5], [12, 10], [18, 10], [18, 18], [20, 24], [30, 15]], dtype=np.float32)
 
         self.anchors = generate_anchors(self.grid_size, self.input_size, self.anchors_seed)
         self.anchors_per_grid = self.anchors_seed.shape[0]
@@ -50,7 +55,7 @@ class YOLO(BaseDataset):
             else 'trainval.txt' if self.phase == 'trainval' \
             else None
 
-        sample_ids_path = os.path.join(self.data_dir, 'image_sets', sample_set_name)
+        sample_ids_path = os.path.join(self.data_dir, sample_set_name)
         with open(sample_ids_path, 'r') as fp:
             sample_ids = fp.readlines()
         sample_ids = tuple(x.strip() for x in sample_ids)
@@ -59,7 +64,7 @@ class YOLO(BaseDataset):
 
     def load_image(self, index):
         image_id = self.sample_ids[index]
-        image_path = os.path.join(self.data_dir, 'training/image_2', image_id + '.jpg')
+        image_path = os.path.join(self.data_dir, 'images', image_id + '.png')
         image = default_loader(image_path)
         if image.mode == 'L':
             image = image.convert('RGB')
@@ -69,7 +74,7 @@ class YOLO(BaseDataset):
 
     def load_annotations(self, index):
         ann_id = self.sample_ids[index]
-        ann_path = os.path.join(self.data_dir, 'training/label_2', ann_id + '.txt')
+        ann_path = os.path.join(self.data_dir, 'labels', ann_id + '.txt')
         with open(ann_path, 'r') as fp:
             annotations = fp.readlines()
 
@@ -121,7 +126,7 @@ class YOLO(BaseDataset):
     def evaluate(self):
         kitti_eval_tool_path = os.path.join(self.cfg.root_dir, 'src/utils/kitti-eval/cpp/evaluate_object')
         cmd = '{} {} {} {} {}'.format(kitti_eval_tool_path,
-                                      os.path.join(self.data_dir, 'training'),
+                                      os.path.join(self.data_dir),
                                       self.sample_set_path,
                                       self.results_dir,
                                       len(self.sample_ids))

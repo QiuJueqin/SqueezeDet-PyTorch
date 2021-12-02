@@ -38,7 +38,6 @@ class Detector(object):
             det['boxes'] = boxes_postprocess(det['boxes'], image_meta)
             det['image_meta'] = image_meta
             results.append(det)
-
             if self.cfg.debug == 2:
                 image = image_postprocess(batch['image'][b].cpu().numpy().transpose(1, 2, 0), image_meta)
                 save_path = os.path.join(self.cfg.debug_dir, image_meta['image_id'] + '.png')
@@ -67,7 +66,6 @@ class Detector(object):
                     batch[k] = batch[k].to(device=self.cfg.device, non_blocking=True)
             data_timer.update(time.time() - end)
             end = time.time()
-
             results.extend(self.detect(batch))
 
             net_timer.update(time.time() - end)
@@ -75,7 +73,7 @@ class Detector(object):
             if iter_id % self.cfg.print_interval == 0:
                 msg = 'eval: [{0}/{1}] | data {2:.3f}s | net {3:.3f}s'.format(
                     iter_id, num_iters, data_timer.val, net_timer.val)
-                # print(msg)
+                print(msg)
                 with open(cfg.log_file, 'a+') as file:
                     file.write(msg + '\n')
 
@@ -83,8 +81,8 @@ class Detector(object):
         tpi = total_time / len(dataset)
         msg = 'Elapsed {:.2f}min ({:.1f}ms/image, {:.1f}frames/s)'.format(
             total_time / 60., tpi * 1000., 1 / tpi)
-        # print(msg)
-        # print('-' * 80)
+        print(msg)
+        print('-' * 80)
         with open(cfg.log_file, 'a+') as file:
             file.write(msg + '\n')
             file.write('-' * 80 + '\n')

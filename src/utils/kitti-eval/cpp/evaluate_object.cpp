@@ -1,4 +1,3 @@
-#pragma warning(push, 0) 
 #include <iostream>
 #include <algorithm>
 #include <stdio.h>
@@ -26,25 +25,26 @@ string ospj( string const & a, string const & b, string const & c ) { return a +
 enum DIFFICULTY{EASY=0, MODERATE=1, HARD=2};
 
 // evaluation parameter
-const int32_t MIN_HEIGHT[3]     = {40, 25, 25};     // minimum height for evaluated groundtruth/detections
+const int32_t MIN_HEIGHT[3]     = {16, 16, 16};     // minimum height for evaluated groundtruth/detections
 const int32_t MAX_OCCLUSION[3]  = {0, 1, 2};        // maximum occlusion level of the groundtruth used for evaluation
 const double  MAX_TRUNCATION[3] = {0.15, 0.3, 0.5}; // maximum truncation level of the groundtruth used for evaluation
 
 // evaluated object classes
-enum CLASSES{BIKE=0, CAR=1, BUS=2};
+enum CLASSES{CAR=0, PEDESTRIAN=1, CYCLIST=2, LPR=3};
 
 // parameters varying per class
 vector<string> CLASS_NAMES;
-const double   MIN_OVERLAP[3] = {0.5, 0.5, 0.5};                  // the minimum overlap required for evaluation
+const double   MIN_OVERLAP[4] = {0.7, 0.5, 0.5, 0.8};                  // the minimum overlap required for evaluation
 
 // no. of recall steps that should be evaluated (discretized)
 const double N_SAMPLE_PTS = 41;
 
 // initialize class names
 void initGlobals () {
-  CLASS_NAMES.push_back("bike");
   CLASS_NAMES.push_back("car");
-  CLASS_NAMES.push_back("bus");
+  CLASS_NAMES.push_back("pedestrian");
+  CLASS_NAMES.push_back("cyclist");
+  CLASS_NAMES.push_back("0");
 }
 
 /*=======================================================================
@@ -64,7 +64,7 @@ struct tPrData {
 
 // holding bounding boxes for ground truth and detections
 struct tBox {
-  string  type;     // object type as bike, car or bus,...
+  string  type;     // object type as car, pedestrian or cyclist,...
   double   x1;      // left corner
   double   y1;      // top corner
   double   x2;      // right corner
@@ -103,7 +103,7 @@ struct tDetection {
 FUNCTIONS TO LOAD DETECTION AND GROUND TRUTH DATA ONCE, SAVE RESULTS
 =======================================================================*/
 
-vector<tDetection> loadDetections(string file_name, bool &compute_aos, bool &eval_bike, bool &eval_car, bool &eval_bus, bool &success) {
+vector<tDetection> loadDetections(string file_name, bool &compute_aos, bool &eval_car, bool &eval_pedestrian, bool &eval_cyclist, bool &eval_lpr, bool &success) {
 
   // holds all detections (ignored detections are indicated by an index vector
   vector<tDetection> detections;
@@ -129,12 +129,14 @@ vector<tDetection> loadDetections(string file_name, bool &compute_aos, bool &eva
         compute_aos = false;
 
       // a class is only evaluated if it is detected at least once
-      if(!eval_bike && !strcasecmp(d.box.type.c_str(), "bike"))
-        eval_bike = true;
       if(!eval_car && !strcasecmp(d.box.type.c_str(), "car"))
         eval_car = true;
-      if(!eval_bus && !strcasecmp(d.box.type.c_str(), "bus"))
-        eval_bus = true;
+      if(!eval_pedestrian && !strcasecmp(d.box.type.c_str(), "pedestrian"))
+        eval_pedestrian = true;
+      if(!eval_cyclist && !strcasecmp(d.box.type.c_str(), "cyclist"))
+        eval_cyclist = true;
+      if(!eval_lpr && !strcasecmp(d.box.type.c_str(), "0"))
+        eval_lpr = true;
     }
   }
   fclose(fp);
@@ -160,8 +162,12 @@ vector<tGroundtruth> loadGroundtruth(string file_name,bool &success) {
                    &g.box.x1,   &g.box.y1,     &g.box.x2,    &g.box.y2,
                    &trash,      &trash,        &trash,       &trash,
                    &trash,      &trash,        &trash )==15) {
-      g.box.type = str;
-      groundtruth.push_back(g);
+      // double width = g.box.x2 > g.box.x1 ? g.box.x2 - g.box.x1 : g.box.x1 - g.box.x2;
+      // double height = g.box.y2 > g.box.y1 ? g.box.y2 - g.box.y1 : g.box.y1 - g.box.y2;
+      // if (height < 16 || width < 32) {
+        g.box.type = str;
+        groundtruth.push_back(g);
+      // }
     }
   }
   fclose(fp);
@@ -279,6 +285,7 @@ void cleanData(CLASSES current_class, const vector<tGroundtruth> &gt, const vect
 
     // only bounding boxes with a minimum height are used for evaluation
     double height = gt[i].box.y2 - gt[i].box.y1;
+    double width =  gt[i].box.x2 - gt[i].box.x1;
 
     // neighboring classes are ignored ("van" for "car" and "person_sitting" for "pedestrian")
     // (lower/upper cases are ignored)
@@ -301,7 +308,7 @@ void cleanData(CLASSES current_class, const vector<tGroundtruth> &gt, const vect
     // ground truth is ignored, if occlusion, truncation exceeds the difficulty or ground truth is too small
     // (doesn't count as FN nor TP, although detections may be assigned)
     bool ignore = false;
-    if(gt[i].occlusion>MAX_OCCLUSION[difficulty] || gt[i].truncation>MAX_TRUNCATION[difficulty] || height<MIN_HEIGHT[difficulty])
+    if(gt[i].occlusion>MAX_OCCLUSION[difficulty] || gt[i].truncation>MAX_TRUNCATION[difficulty] || height<MIN_HEIGHT[difficulty] || width<32)
       ignore = true;
 
     // set ignored vector for ground truth
@@ -387,7 +394,6 @@ tPrData computeStatistics(CLASSES current_class, const vector<tGroundtruth> &gt,
 
       // find the maximum score for the candidates and get idx of respective detection
       double overlap = boxoverlap(det[j].box, gt[i].box);
-
       // for computing recall thresholds, the candidate with highest score is considered
       if(!compute_fp && overlap>MIN_OVERLAP[current_class] && det[j].thresh>valid_detection){
         det_idx         = j;
@@ -575,7 +581,7 @@ bool eval_class (FILE *fp_det, FILE *fp_ap, FILE *fp_ori, CLASSES current_class,
     if(compute_aos)
       aos[i] = *max_element(aos.begin()+i, aos.end());
   }
-
+  
   // save statisics and finish with success
   saveStats(precision, aos, fp_det, fp_ap, fp_ori);
 	return true;
@@ -661,9 +667,10 @@ bool eval(string const & result_dir, string const & image_set_filename, string c
 
   // holds wether orientation similarity shall be computed (might be set to false while loading detections)
   // and which labels where provided by this submission
-  bool compute_aos=true, eval_bike=false, eval_car=false, eval_bus=false;
+  bool compute_aos=false, eval_car=false, eval_pedestrian=false, eval_cyclist=false, eval_lpr=false;
 
   // get image names
+  std::cout << "filename: " << image_set_filename << std::endl;
   FILE *fp = fopen( image_set_filename.c_str(),"r" );
   if (!fp) {
     mail->msg("ERROR: Couldn't read: image set file %s!", image_set_filename.c_str() );
@@ -676,6 +683,7 @@ bool eval(string const & result_dir, string const & image_set_filename, string c
       image_set.push_back(str);
     }
   }
+  //image_set.pop_back();
   fclose(fp);
   if( image_set.size() != N_TESTIMAGES ) {
     printf( "image_set.size()=%s N_TESTIMAGES=%s\n", str(image_set.size()).c_str(), str(N_TESTIMAGES).c_str() );
@@ -693,7 +701,7 @@ bool eval(string const & result_dir, string const & image_set_filename, string c
     // read ground truth and result poses
     bool gt_success,det_success;
     vector<tGroundtruth> gt   = loadGroundtruth(ospj(gt_dir,file_name),gt_success);
-    vector<tDetection>   det  = loadDetections(ospj(result_dir,"data",file_name), compute_aos, eval_bike, eval_car, eval_bus,det_success);
+    vector<tDetection>   det  = loadDetections(ospj(result_dir,"data",file_name), compute_aos, eval_car, eval_pedestrian, eval_cyclist, eval_lpr, det_success);
     groundtruth.push_back(gt);
     detections.push_back(det);
 
@@ -711,29 +719,6 @@ bool eval(string const & result_dir, string const & image_set_filename, string c
 
   // holds pointers for result files
   FILE *fp_det=0, *fp_ap=0, *fp_ori=0;
-
-  // eval bike
-  if(eval_bike){
-    fp_det = fopen((result_dir + "/stats_" + CLASS_NAMES[BIKE] + "_detection.txt").c_str(),"w");
-    fp_ap = fopen((result_dir + "/stats_" + CLASS_NAMES[BIKE] + "_ap.txt").c_str(),"w");
-    if(compute_aos)
-      fp_ori = fopen((result_dir + "/stats_" + CLASS_NAMES[BIKE] + "_orientation.txt").c_str(),"w");
-    vector<double> precision[3], aos[3];
-    if( !eval_class(fp_det,fp_ap,fp_ori,BIKE,groundtruth,detections,compute_aos,precision[0],aos[0],EASY,N_TESTIMAGES)
-       || !eval_class(fp_det,fp_ap,fp_ori,BIKE,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE, N_TESTIMAGES)
-       || !eval_class(fp_det,fp_ap,fp_ori,BIKE,groundtruth,detections,compute_aos,precision[2],aos[2],HARD, N_TESTIMAGES)){
-      mail->msg("Bike evaluation failed.");
-      return false;
-    }
-    fclose(fp_det);
-    fclose(fp_ap);
-    saveAndPlotPlots(plot_dir,CLASS_NAMES[BIKE] + "_detection",CLASS_NAMES[BIKE],precision,0);
-    if(compute_aos){
-      saveAndPlotPlots(plot_dir,CLASS_NAMES[BIKE] + "_orientation",CLASS_NAMES[BIKE],aos,1);
-      fclose(fp_ori);
-    }
-  }
-
   // eval cars
   if(eval_car){
     fp_det = fopen((result_dir + "/stats_" + CLASS_NAMES[CAR] + "_detection.txt").c_str(),"w");
@@ -741,9 +726,9 @@ bool eval(string const & result_dir, string const & image_set_filename, string c
     if(compute_aos)
       fp_ori = fopen((result_dir + "/stats_" + CLASS_NAMES[CAR] + "_orientation.txt").c_str(),"w");
     vector<double> precision[3], aos[3];
-    if( !eval_class(fp_det,fp_ap,fp_ori,CAR,groundtruth,detections,compute_aos,precision[0],aos[0],EASY, N_TESTIMAGES)
-       || !eval_class(fp_det,fp_ap,fp_ori,CAR,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE,N_TESTIMAGES)
-       || !eval_class(fp_det,fp_ap,fp_ori,CAR,groundtruth,detections,compute_aos,precision[2],aos[2],HARD,N_TESTIMAGES)){
+    if( !eval_class(fp_det,fp_ap,fp_ori,CAR,groundtruth,detections,compute_aos,precision[0],aos[0],EASY,N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,CAR,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE, N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,CAR,groundtruth,detections,compute_aos,precision[2],aos[2],HARD, N_TESTIMAGES)){
       mail->msg("Car evaluation failed.");
       return false;
     }
@@ -751,31 +736,75 @@ bool eval(string const & result_dir, string const & image_set_filename, string c
     fclose(fp_ap);
     saveAndPlotPlots(plot_dir,CLASS_NAMES[CAR] + "_detection",CLASS_NAMES[CAR],precision,0);
     if(compute_aos){
-      fclose(fp_ori);
       saveAndPlotPlots(plot_dir,CLASS_NAMES[CAR] + "_orientation",CLASS_NAMES[CAR],aos,1);
+      fclose(fp_ori);
     }
   }
 
-  // eval bus
-  if(eval_bus){
-    fp_det = fopen((result_dir + "/stats_" + CLASS_NAMES[BUS]  + "_detection.txt").c_str(),"w");
-    fp_ap = fopen((result_dir + "/stats_" + CLASS_NAMES[BUS] + "_ap.txt").c_str(),"w");
+  // eval pedestrians
+  if(eval_pedestrian){
+    fp_det = fopen((result_dir + "/stats_" + CLASS_NAMES[PEDESTRIAN] + "_detection.txt").c_str(),"w");
+    fp_ap = fopen((result_dir + "/stats_" + CLASS_NAMES[PEDESTRIAN] + "_ap.txt").c_str(),"w");
     if(compute_aos)
-      fp_ori = fopen((result_dir + "/stats_" + CLASS_NAMES[BUS] + "_orientation.txt").c_str(),"w");
+      fp_ori = fopen((result_dir + "/stats_" + CLASS_NAMES[PEDESTRIAN] + "_orientation.txt").c_str(),"w");
     vector<double> precision[3], aos[3];
-    if( !eval_class(fp_det,fp_ap,fp_ori,BUS,groundtruth,detections,compute_aos,precision[0],aos[0],EASY, N_TESTIMAGES)
-       || !eval_class(fp_det,fp_ap,fp_ori,BUS,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE, N_TESTIMAGES)
-       || !eval_class(fp_det,fp_ap,fp_ori,BUS,groundtruth,detections,compute_aos,precision[2],aos[2],HARD, N_TESTIMAGES)){
-      mail->msg("bus evaluation failed.");
+    if( !eval_class(fp_det,fp_ap,fp_ori,PEDESTRIAN,groundtruth,detections,compute_aos,precision[0],aos[0],EASY, N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,PEDESTRIAN,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE,N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,PEDESTRIAN,groundtruth,detections,compute_aos,precision[2],aos[2],HARD,N_TESTIMAGES)){
+      mail->msg("Pedestrian evaluation failed.");
       return false;
     }
     fclose(fp_det);
     fclose(fp_ap);
-    saveAndPlotPlots(plot_dir,CLASS_NAMES[BUS] + "_detection",CLASS_NAMES[BUS],precision,0);
+    saveAndPlotPlots(plot_dir,CLASS_NAMES[PEDESTRIAN] + "_detection",CLASS_NAMES[PEDESTRIAN],precision,0);
     if(compute_aos){
       fclose(fp_ori);
-      saveAndPlotPlots(plot_dir,CLASS_NAMES[BUS] + "_orientation",CLASS_NAMES[BUS],aos,1);
+      saveAndPlotPlots(plot_dir,CLASS_NAMES[PEDESTRIAN] + "_orientation",CLASS_NAMES[PEDESTRIAN],aos,1);
     }
+  }
+
+  // eval cyclists
+  if(eval_cyclist){
+    fp_det = fopen((result_dir + "/stats_" + CLASS_NAMES[CYCLIST]  + "_detection.txt").c_str(),"w");
+    fp_ap = fopen((result_dir + "/stats_" + CLASS_NAMES[CYCLIST] + "_ap.txt").c_str(),"w");
+    if(compute_aos)
+      fp_ori = fopen((result_dir + "/stats_" + CLASS_NAMES[CYCLIST] + "_orientation.txt").c_str(),"w");
+    vector<double> precision[3], aos[3];
+    if( !eval_class(fp_det,fp_ap,fp_ori,CYCLIST,groundtruth,detections,compute_aos,precision[0],aos[0],EASY, N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,CYCLIST,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE, N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,CYCLIST,groundtruth,detections,compute_aos,precision[2],aos[2],HARD, N_TESTIMAGES)){
+      mail->msg("Cyclist evaluation failed.");
+      return false;
+    }
+    fclose(fp_det);
+    fclose(fp_ap);
+    saveAndPlotPlots(plot_dir,CLASS_NAMES[CYCLIST] + "_detection",CLASS_NAMES[CYCLIST],precision,0);
+    if(compute_aos){
+      fclose(fp_ori);
+      saveAndPlotPlots(plot_dir,CLASS_NAMES[CYCLIST] + "_orientation",CLASS_NAMES[CYCLIST],aos,1);
+    }
+  }
+
+  // eval lpr
+  if(eval_lpr){
+    fp_det = fopen((result_dir + "/stats_" + CLASS_NAMES[LPR] + "_detection.txt").c_str(),"w");
+    fp_ap = fopen((result_dir + "/stats_" + CLASS_NAMES[LPR] + "_ap.txt").c_str(),"w");
+    if(compute_aos)
+      fp_ori = fopen((result_dir + "/stats_" + CLASS_NAMES[LPR] + "_orientation.txt").c_str(),"w");
+    vector<double> precision[3], aos[3];
+    if( !eval_class(fp_det,fp_ap,fp_ori,LPR,groundtruth,detections,compute_aos,precision[0],aos[0],EASY,N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,LPR,groundtruth,detections,compute_aos,precision[1],aos[1],MODERATE, N_TESTIMAGES)
+       || !eval_class(fp_det,fp_ap,fp_ori,LPR,groundtruth,detections,compute_aos,precision[2],aos[2],HARD, N_TESTIMAGES)){
+      mail->msg("LPR evaluation failed.");
+      return false;
+    }
+    fclose(fp_det);
+    fclose(fp_ap);
+    saveAndPlotPlots(plot_dir,CLASS_NAMES[CAR] + "_detection",CLASS_NAMES[CAR],precision,0);
+    // if(compute_aos){
+    //   saveAndPlotPlots(plot_dir,CLASS_NAMES[CAR] + "_orientation",CLASS_NAMES[CAR],aos,1);
+    //   fclose(fp_ori);
+  //   }
   }
 
   // success
@@ -792,7 +821,7 @@ int32_t main (int32_t argc,char *argv[]) {
 
   // read arguments
   string const kitti_dir          = argv[1];
-  string const gt_dir             = ospj( kitti_dir, "label_2" ); // FIXME_MWM: should be part of input? configurable?
+  string const gt_dir             = ospj( kitti_dir, "labels"); // FIXME_MWM: should be part of input? configurable?
   string const image_set_filename = argv[2];
   string const result_dir         = argv[3];
   int32_t const N_TESTIMAGES      = atoi(argv[4]);
@@ -815,4 +844,3 @@ int32_t main (int32_t argc,char *argv[]) {
   return 0;
 }
 
-#pragma warning(pop)

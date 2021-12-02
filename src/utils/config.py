@@ -32,7 +32,7 @@ class Config(object):
                                  help='momentum of SGD.')
         self.parser.add_argument('--weight_decay', type=float, default=0.0001,
                                  help='weight decay of SGD.')
-        self.parser.add_argument('--grad_norm', type=float, default=5.,
+        self.parser.add_argument('--grad_norm', type=float, default=0.5,
                                  help='max norm of the gradients.')
         self.parser.add_argument('--num_epochs', type=int, default=100,
                                  help='total training epochs.')
@@ -63,13 +63,13 @@ class Config(object):
                                  help='positive weight of score prediction loss.')
         self.parser.add_argument('--negative_score_loss_weight', type=float, default=100.,
                                  help='negative weight of score prediction loss.')
-        self.parser.add_argument('--bbox_loss_weight', type=float, default=20.,
+        self.parser.add_argument('--bbox_loss_weight', type=float, default=6.,
                                  help='weight of boxes regression loss.')
 
         # inference
-        self.parser.add_argument('--nms_thresh', type=float, default=0.4,
+        self.parser.add_argument('--nms_thresh', type=float, default=0.01,
                                  help='discards all overlapping boxes with IoU < nms_thresh.')
-        self.parser.add_argument('--score_thresh', type=float, default=0.5,
+        self.parser.add_argument('--score_thresh', type=float, default=0.6,
                                  help='discards all boxes with scores smaller than score_thresh.')
         self.parser.add_argument('--keep_top_k', type=int, default=64,
                                  help='keep top k detections before nms.')
@@ -146,7 +146,7 @@ class Config(object):
         for name in sorted(names):
             if not name.startswith('_'):
                 msg = '{:<30} {}'.format(name, getattr(cfg, name))
-                # print(msg)
+                print(msg)
                 with open(cfg.log_file, 'a+') as file:
                     file.write(msg + '\n')
                 
