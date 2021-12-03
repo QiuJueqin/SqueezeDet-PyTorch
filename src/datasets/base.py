@@ -95,34 +95,30 @@ class BaseDataset(torch.utils.data.Dataset):
         return len(self.sample_ids)
 
     def preprocess(self, image, image_meta, boxes=None, class_ids=None):
-        if boxes is not None:
-            boxes[:, [0, 2]] = np.clip(boxes[:, [0, 2]], 0., image_meta['orig_size'][1] - 1.)
-            boxes[:, [1, 3]] = np.clip(boxes[:, [1, 3]], 0., image_meta['orig_size'][0] - 1.)
-        
-        # if self.phase == "train":
-        #     prob = random.random()
-        #     if boxes is not None:
-        #         if prob < 0.7:
-        #             image = Image.fromarray(cv2.cvtColor(image.astype(np.uint8), cv2.COLOR_BGR2RGB))
-        #             image = transforms.ColorJitter(brightness=(0.6,1.3), contrast=(0.6, 1.3),
-        #                                     saturation=(0.6, 1.3), hue=(-0.3, 0.3)) (image)
-        #             image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-        #             boxes_aug = []
-        #             for box, label in zip(boxes, class_ids):
-        #                 boxes_aug.append(BoundingBox(box[0],box[1],box[2],box[3], label=label))
-        #             boxes_augmented = BoundingBoxesOnImage(boxes_aug,shape=image.shape)
-        #             image_aug, bbs_aug = self.seq(image = image, bounding_boxes=boxes_augmented)
-        #             bbs_aug = bbs_aug.remove_out_of_image(fully=True, partly=True).clip_out_of_image()
-        #             boxes = np.zeros((len(bbs_aug.bounding_boxes),4))
-        #             class_ids = []
-        #             for i in range(len(bbs_aug.bounding_boxes)):
-        #                 boxes[i]= [bbs_aug.bounding_boxes[i].x1,bbs_aug.bounding_boxes[i].y1,
-        #                             bbs_aug.bounding_boxes[i].x2,bbs_aug.bounding_boxes[i].y2]
-        #                 class_ids.append(bbs_aug.bounding_boxes[i].label)
-        #             class_ids = np.array(class_ids, dtype=np.int16)
-        #             image = image_aug.astype(np.float32)
-        #             if not len(boxes):
-        #                 boxes = None
+        if self.phase == "train":
+            prob = random.random()
+            if boxes is not None:
+                if prob < 0.7:
+                    image = Image.fromarray(cv2.cvtColor(image.astype(np.uint8), cv2.COLOR_BGR2RGB))
+                    image = transforms.ColorJitter(brightness=(0.6,1.3), contrast=(0.6, 1.3),
+                                            saturation=(0.6, 1.3), hue=(-0.3, 0.3)) (image)
+                    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+                    boxes_aug = []
+                    for box, label in zip(boxes, class_ids):
+                        boxes_aug.append(BoundingBox(box[0],box[1],box[2],box[3], label=label))
+                    boxes_augmented = BoundingBoxesOnImage(boxes_aug,shape=image.shape)
+                    image_aug, bbs_aug = self.seq(image = image, bounding_boxes=boxes_augmented)
+                    bbs_aug = bbs_aug.remove_out_of_image(fully=True, partly=True).clip_out_of_image()
+                    boxes = np.zeros((len(bbs_aug.bounding_boxes),4))
+                    class_ids = []
+                    for i in range(len(bbs_aug.bounding_boxes)):
+                        boxes[i]= [bbs_aug.bounding_boxes[i].x1,bbs_aug.bounding_boxes[i].y1,
+                                    bbs_aug.bounding_boxes[i].x2,bbs_aug.bounding_boxes[i].y2]
+                        class_ids.append(bbs_aug.bounding_boxes[i].label)
+                    class_ids = np.array(class_ids, dtype=np.int16)
+                    image = image_aug.astype(np.float32)
+                    if not len(boxes):
+                        boxes = None
 
         drift_prob = self.cfg.drift_prob if self.phase == 'train' else 0.
         flip_prob = self.cfg.flip_prob if self.phase == 'train' else 0.
@@ -133,7 +129,17 @@ class BaseDataset(torch.utils.data.Dataset):
         if self.cfg.forbid_resize:
             image, image_meta, boxes = crop_or_pad(image, image_meta, self.input_size, boxes=boxes)
         else:
-            image, image_meta, boxes = resize(image, image_meta, self.input_size, boxes=boxes)            
+            image, image_meta, boxes = resize(image, image_meta, self.input_size, boxes=boxes)        
+
+        if boxes is not None:
+            boxes[:, [0, 2]] = np.clip(boxes[:, [0, 2]], 0., image_meta['orig_size'][1] - 1.)
+            boxes[:, [1, 3]] = np.clip(boxes[:, [1, 3]], 0., image_meta['orig_size'][0] - 1.)
+            inds = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1]) > 14
+            boxes = boxes[inds]
+            class_ids = class_ids[inds]
+            if not len(boxes):
+                boxes = None
+
         return image, image_meta, boxes, class_ids
 
     def prepare_annotations(self, class_ids, boxes):

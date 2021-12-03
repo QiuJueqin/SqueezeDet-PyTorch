@@ -1,8 +1,9 @@
 import torch
 import torch.utils.data
-
+import copy
+import numpy as np
 from engine.detector import Detector
-from model.squeezedet import SqueezeDet
+from model.squeezedet import SqueezeDetWithLoss
 from utils.config import Config
 from utils.model import load_model
 from utils.misc import load_dataset
@@ -21,8 +22,17 @@ def eval(cfg):
 
 
 def eval_dataset(dataset, model, cfg):
-    # model = SqueezeDet(cfg)
-    # model = load_model(model, model_path, cfg)
+    if cfg.mode=='eval':
+        model = SqueezeDetWithLoss(cfg)
+        if cfg.qat:
+
+            model.qconfig = torch.quantization.get_default_qat_qconfig('qnnpack')
+            fused_model = copy.deepcopy(model)
+            fused_model.fuse_model()
+            assert model_equivalence(model_1=model, model_2=fused_model, device='cpu', rtol=1e-03, atol=1e-06, num_tests=100, input_size=(1,3,cfg.input_size[0],cfg.input_size[1])), "Fused model is not equivalent to the original model!"
+            model = torch.quantization.prepare_qat(fused_model)
+
+        model = load_model(model, cfg.load_model, cfg)
     detect = model.detect
     model.detect = True
     detector = Detector(model, cfg)
@@ -32,3 +42,22 @@ def eval_dataset(dataset, model, cfg):
     aps = dataset.evaluate()
     model.detect = detect
     return aps
+
+
+def model_equivalence(model_1, model_2, device, rtol=1e-05, atol=1e-08, num_tests=100, input_size=(1,3,32,32)):
+
+    model_1.to(device)
+    model_2.to(device)
+
+    for _ in range(num_tests):
+        x = torch.rand(size=input_size).to(device)
+
+        y1 = model_1.base(x).detach().cpu().numpy()
+        y2 = model_2.base(x).detach().cpu().numpy()
+        if np.allclose(a=y1, b=y2, rtol=rtol, atol=atol, equal_nan=False) == False:
+            print("Model equivalence test sample failed: ")
+            print(y1)
+            print(y2)
+            return False
+
+    return True

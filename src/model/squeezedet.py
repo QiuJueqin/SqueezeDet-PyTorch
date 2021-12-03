@@ -34,6 +34,7 @@ class SqueezeDetBase(nn.Module):
         self.dequant = torch.quantization.DeQuantStub()
         self.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=2, padding=1)
         self.relu1 = nn.ReLU(inplace=True)
+        self.qat = cfg.qat
 
         if cfg.arch == 'squeezedet':
             self.features = nn.Sequential(
@@ -54,31 +55,31 @@ class SqueezeDetBase(nn.Module):
                 # Fire(768, 96, 384, 384)
             )
             out_channels = 512
-        elif cfg.arch == 'squeezedetplus':
-            self.features = nn.Sequential(
-                nn.Conv2d(3, 96, kernel_size=7, stride=2, padding=3),
-                nn.ReLU(inplace=True),
-                nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
-                Fire(96, 96, 64, 64),
-                Fire(128, 96, 64, 64),
-                Fire(128, 192, 128, 128),
-                nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
-                Fire(256, 192, 128, 128),
-                Fire(256, 288, 192, 192),
-                Fire(384, 288, 192, 192),
-                Fire(384, 384, 256, 256),
-                nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
-                Fire(512, 384, 256, 256),
-                Fire(512, 384, 256, 256),
-                Fire(512, 384, 256, 256),
-            )
-            out_channels = 512
-        elif cfg.arch == 'mobilenet_v2':
-            self.features = torchvision.models.mobilenet_v2(pretrained=False).features
-            self.features = nn.Sequential(*list(self.features.children()))
-            block_14 = self.features[14]
-            block_14.conv[1][0].stride = (1, 1)
-            out_channels = 1280
+        # elif cfg.arch == 'squeezedetplus':
+        #     self.features = nn.Sequential(
+        #         nn.Conv2d(3, 96, kernel_size=7, stride=2, padding=3),
+        #         nn.ReLU(inplace=True),
+        #         nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
+        #         Fire(96, 96, 64, 64),
+        #         Fire(128, 96, 64, 64),
+        #         Fire(128, 192, 128, 128),
+        #         nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
+        #         Fire(256, 192, 128, 128),
+        #         Fire(256, 288, 192, 192),
+        #         Fire(384, 288, 192, 192),
+        #         Fire(384, 384, 256, 256),
+        #         nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
+        #         Fire(512, 384, 256, 256),
+        #         Fire(512, 384, 256, 256),
+        #         Fire(512, 384, 256, 256),
+        #     )
+        #     out_channels = 512
+        # elif cfg.arch == 'mobilenet_v2':
+        #     self.features = torchvision.models.mobilenet_v2(pretrained=False).features
+        #     self.features = nn.Sequential(*list(self.features.children()))
+        #     block_14 = self.features[14]
+        #     block_14.conv[1][0].stride = (1, 1)
+        #     out_channels = 1280
         else:
             raise ValueError('Invalid architecture.')
 
@@ -91,7 +92,8 @@ class SqueezeDetBase(nn.Module):
         self.init_weights()
 
     def forward(self, x):
-        x = self.quant(x)
+        if self.qat:
+            x = self.quant(x)
         x = self.conv1(x)
         x = self.relu1(x)
         x = self.features(x)
@@ -100,7 +102,8 @@ class SqueezeDetBase(nn.Module):
         x = self.convdet(x)
         x = x.permute(0, 2, 3, 1).contiguous()
         x = x.view(-1, self.num_anchors, self.num_classes + 5)
-        x = self.dequant(x)
+        if self.qat:
+            x = self.dequant(x)
         return x
 
     def init_weights(self):

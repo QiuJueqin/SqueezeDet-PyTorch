@@ -26,6 +26,8 @@ class Config(object):
                                  help='probability of dropout.')
 
         # train
+        self.parser.add_argument('--qat', action='store_true',
+                                 help='Quantization Aware Training with pytorch fake quantizer')
         self.parser.add_argument('--lr', type=float, default=0.001,
                                  help='learning rate for batch size 32.')
         self.parser.add_argument('--momentum', type=float, default=0.9,

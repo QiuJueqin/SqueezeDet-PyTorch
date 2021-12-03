@@ -9,20 +9,21 @@ def load_model(model, model_path, cfg):
     with open(cfg.log_file, 'a+') as file:
         file.write(msg + '\n')
     state_dict_ = checkpoint['state_dict']
-    dt = {}
-    for k, v in state_dict_.items():
-        k = k.replace('base.features.0', 'base.conv1')
-        k = k.replace('base.features.3', 'base.features.1')
-        k = k.replace('base.features.4', 'base.features.2')
-        k = k.replace('base.features.6', 'base.features.4')
-        k = k.replace('base.features.7', 'base.features.5')
-        k = k.replace('base.features.9', 'base.features.7')
-        k = k.replace('base.features.10', 'base.features.8')
-        k = k.replace('base.features.11', 'base.features.9')
-        k = k.replace('base.features.12', 'base.features.10')
-        dt[k] = v
+    if not cfg.qat:
+        dt = {}
+        for k, v in state_dict_.items():
+            k = k.replace('base.features.0', 'base.conv1')
+            k = k.replace('base.features.3', 'base.features.1')
+            k = k.replace('base.features.4', 'base.features.2')
+            k = k.replace('base.features.6', 'base.features.4')
+            k = k.replace('base.features.7', 'base.features.5')
+            k = k.replace('base.features.9', 'base.features.7')
+            k = k.replace('base.features.10', 'base.features.8')
+            k = k.replace('base.features.11', 'base.features.9')
+            k = k.replace('base.features.12', 'base.features.10')
+            dt[k] = v
 
-    state_dict_ = dt
+        state_dict_ = dt
 
     state_dict = {}
     for k in state_dict_:
@@ -36,7 +37,9 @@ def load_model(model, model_path, cfg):
     success_loaded = True
     for layer in state_dict:
         if layer in model_state_dict:
-            if state_dict[layer].shape != model_state_dict[layer].shape:
+            if cfg.qat:
+                pass
+            elif state_dict[layer].shape != model_state_dict[layer].shape:
                 success_loaded = False
                 msg = 'Skip loading param {}, required shape{}, loaded shape{}.'.format(
                     layer, model_state_dict[layer].shape, state_dict[layer].shape)
