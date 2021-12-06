@@ -9,7 +9,7 @@ def load_model(model, model_path, cfg):
     with open(cfg.log_file, 'a+') as file:
         file.write(msg + '\n')
     state_dict_ = checkpoint['state_dict']
-    if not cfg.qat:
+    if cfg.load_pretrained:
         dt = {}
         for k, v in state_dict_.items():
             k = k.replace('base.features.0', 'base.conv1')

@@ -13,6 +13,9 @@ if cfg.mode == 'train':
 elif cfg.mode == 'eval':
     from eval import eval
     eval(cfg)
+elif cfg.mode == 'tfliteeval':
+    from tfliteeval import TfliteEval
+    TfliteEval(cfg)
 elif cfg.mode == 'demo':
     from demo import demo
     demo(cfg)

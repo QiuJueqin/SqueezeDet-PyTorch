@@ -20,51 +20,70 @@ class BaseDataset(torch.utils.data.Dataset):
         self.phase = phase
         self.cfg = cfg
         self.seq = iaa.Sequential([
+            iaa.SomeOf((0, 2),[
+                iaa.Flipud(0.5),
+                iaa.Fliplr(0.1),
+            ]),
             # Perspective/Affine
             iaa.Sometimes(
-                p=0.2,
+                p=0.3,
                 then_list=iaa.OneOf([
                         iaa.Affine(
-                                scale=(0.8, 1.2),
-                                rotate=(-5, 5),
-                                shear=(-2, 2),
+                                scale={"x": (0.8, 1.2), "y": (0.8, 1.2)},
+                                translate_percent={"x": (-0.2, 0.2), "y": (-0.2, 0.2)},
+                                rotate=(-20, 20),
+                                shear=(-15, 15),
+                                order=[0, 1],
+                                cval=(0, 255),
+                                mode=ia.ALL
                             ),
-                        iaa.PerspectiveTransform(scale=(0.02, 0.125)),
+                        iaa.CropAndPad(percent=(-0.3, 0.3), pad_mode=ia.ALL),
+                        iaa.PerspectiveTransform(scale=(0.02, 0.15)),
+                        # iaa.PiecewiseAffine(scale=(0.01, 0.1)),
                     ])
             ),
             iaa.Sometimes(
-                0.2,
+                0.1,
                 iaa.OneOf([
-                    iaa.CropAndPad(percent=(-0.3, 0.3), pad_mode=ia.ALL),
+                    iaa.Rain(speed=(0.1, 0.2)),
+                    iaa.Snowflakes(flake_size=(0.2, 0.7), speed=(0.007, 0.03))
                 ])
             ),
-
             iaa.Sometimes(
-                0.3,
-                iaa.OneOf([
-                    iaa.GaussianBlur((0.0, 1.0)),
-                    iaa.AverageBlur((2,5)),
-                    iaa.MedianBlur((3,5))
+                p=0.05,
+                then_list=iaa.OneOf([
+                # iaa.Cartoon(blur_ksize=3, segmentation_size=1.0, saturation=2.0, edge_prevalence=1.0),
+                iaa.DirectedEdgeDetect(alpha=(0.0, 0.3), direction=(0.0, 1.0)),
+                iaa.Solarize(p=1),
+                iaa.pillike.Posterize(nb_bits=(1, 8)),
+                # iaa.RandAugment(m=(1, 5)),
                 ])
             ),
-            
             iaa.Sometimes(
-                0.3,
-                iaa.OneOf([
-                    iaa.imgcorruptlike.Fog(severity=1),
-                    iaa.imgcorruptlike.Snow(severity=1),
-                    iaa.imgcorruptlike.Frost(severity=1)
+                p=0.15,
+                then_list=iaa.OneOf([
+                    ## Smoothing
+                    iaa.OneOf([
+                        iaa.pillike.FilterSmooth(),
+                        iaa.pillike.FilterSmoothMore()
+                    ]),
+                    ## Blurring
+                    iaa.OneOf([
+                        iaa.imgcorruptlike.DefocusBlur(severity=1),
+                        iaa.imgcorruptlike.ZoomBlur(severity=1),
+                        iaa.MotionBlur(k=(3, 15), angle=(0, 360),direction=(-1.0, 1.0)),
+                        iaa.imgcorruptlike.MotionBlur(severity=1),
+                        iaa.BilateralBlur(d=(3, 10), sigma_color=(10, 250), sigma_space=(10, 250)),
+                    ]),
+                    ## Edge Enhancement
+                    iaa.OneOf([
+                        iaa.pillike.FilterEdgeEnhance(),
+                        iaa.pillike.FilterEdgeEnhanceMore(),
+                        iaa.pillike.FilterContour(),
+                        iaa.pillike.FilterDetail(),            
+                    ])
                 ])
             ),
-
-            iaa.Sometimes(
-                0.2,
-                iaa.OneOf([
-                    iaa.ChangeColorTemperature((3500, 15000)),
-                ])
-            ),
-
-
         ],random_order=True)
 
     def __getitem__(self, index):
@@ -75,17 +94,18 @@ class BaseDataset(torch.utils.data.Dataset):
                       'image_id': image_id,
                       'orig_size': np.array(image.shape, dtype=np.int32)}
         
-        image, image_meta, gt_boxes, gt_class_ids = self.preprocess(image, image_meta, gt_boxes, gt_class_ids)
+        image, image_visualize, image_meta, gt_boxes, gt_class_ids = self.preprocess(image, image_meta, gt_boxes, gt_class_ids)
         gt = self.prepare_annotations(gt_class_ids, gt_boxes)
 
-        inp = {'image': image.transpose(2, 0, 1),
+        inp = {'image': image,
                'image_meta': image_meta,
                'gt': gt}
 
         if self.cfg.debug == 1:
-            image = image * image_meta['rgb_std'] + image_meta['rgb_mean']
+            # image = image * image_meta['rgb_std'] + image_meta['rgb_mean']
+
             save_path = os.path.join(self.cfg.debug_dir, image_meta['image_id'] + '.png')
-            visualize_boxes(image, gt_class_ids, gt_boxes,
+            visualize_boxes(image_visualize, gt_class_ids, gt_boxes,
                             class_names=self.class_names,
                             save_path=save_path)
 
@@ -95,6 +115,12 @@ class BaseDataset(torch.utils.data.Dataset):
         return len(self.sample_ids)
 
     def preprocess(self, image, image_meta, boxes=None, class_ids=None):
+
+        if self.cfg.forbid_resize:
+            image, image_meta, boxes = crop_or_pad(image, image_meta, self.input_size, boxes=boxes)
+        else:
+            image, image_meta, boxes = resize(image, image_meta, self.input_size, boxes=boxes)    
+
         if self.phase == "train":
             prob = random.random()
             if boxes is not None:
@@ -120,27 +146,30 @@ class BaseDataset(torch.utils.data.Dataset):
                     if not len(boxes):
                         boxes = None
 
-        drift_prob = self.cfg.drift_prob if self.phase == 'train' else 0.
-        flip_prob = self.cfg.flip_prob if self.phase == 'train' else 0.
-
-        image, image_meta = whiten(image, image_meta, mean=self.rgb_mean, std=self.rgb_std)
+        # Trajectory Specific
+        # drift_prob = self.cfg.drift_prob if self.phase == 'train' else 0.
+        # flip_prob = self.cfg.flip_prob if self.phase == 'train' else 0.
+        # image, image_meta = whiten(image, image_meta, mean=self.rgb_mean, std=self.rgb_std)
         # image, image_meta, boxes = drift(image, image_meta, prob=drift_prob, boxes=boxes)
         # image, image_meta, boxes = flip(image, image_meta, prob=flip_prob, boxes=boxes)
-        if self.cfg.forbid_resize:
-            image, image_meta, boxes = crop_or_pad(image, image_meta, self.input_size, boxes=boxes)
-        else:
-            image, image_meta, boxes = resize(image, image_meta, self.input_size, boxes=boxes)        
+        # image_visualize = image
+
+        # LPR Specific
+        image = Image.fromarray(cv2.cvtColor(image.astype(np.uint8), cv2.COLOR_BGR2RGB))
+        image_visualize = transforms.Grayscale(num_output_channels=3) (image)
+        image = transforms.ToTensor()(image_visualize)
+        image_visualize = cv2.cvtColor(np.array(image_visualize), cv2.COLOR_RGB2BGR)
 
         if boxes is not None:
             boxes[:, [0, 2]] = np.clip(boxes[:, [0, 2]], 0., image_meta['orig_size'][1] - 1.)
             boxes[:, [1, 3]] = np.clip(boxes[:, [1, 3]], 0., image_meta['orig_size'][0] - 1.)
-            inds = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1]) > 14
+            inds = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1]) >= 16
             boxes = boxes[inds]
             class_ids = class_ids[inds]
             if not len(boxes):
                 boxes = None
 
-        return image, image_meta, boxes, class_ids
+        return image, image_visualize, image_meta, boxes, class_ids
 
     def prepare_annotations(self, class_ids, boxes):
         """

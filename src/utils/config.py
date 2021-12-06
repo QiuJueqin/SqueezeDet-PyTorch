@@ -26,6 +26,9 @@ class Config(object):
                                  help='probability of dropout.')
 
         # train
+        self.parser.add_argument('--load_pretrained', action='store_true',
+                                 help='This converts the weight keys format from old repo to qat format')
+    
         self.parser.add_argument('--qat', action='store_true',
                                  help='Quantization Aware Training with pytorch fake quantizer')
         self.parser.add_argument('--lr', type=float, default=0.001,

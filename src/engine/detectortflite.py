@@ -10,18 +10,33 @@ from utils.image import image_postprocess
 from utils.boxes import boxes_postprocess, visualize_boxes
 from utils.misc import MetricLogger
 from torchvision.datasets.folder import default_loader
+from model.squeezedet import PredictionResolver
 
 
-class Detector(object):
+class DetectorTflite(object):
     def __init__(self, model, cfg):
-        self.model = model.to(cfg.device)
-        self.model.eval()
+        self.model = model
+        self.resolver = PredictionResolver(cfg, log_softmax=False)
         self.cfg = cfg
         self.data_dir = os.path.join(self.cfg.data_dir, 'lpr_crop/merged_data')
 
     def detect(self, batch):
-        dets = self.model(batch)
+        inp_details = self.model.get_input_details()
+        out_details = self.model.get_output_details()
+        tf_in = batch['image'].cpu().detach().numpy().transpose(0,2,3,1)
+        self.model.set_tensor(inp_details[0]['index'], value=tf_in)
+        self.model.invoke()
+        tfl_out1 = self.model.get_tensor(out_details[0]['index'])
+        pred = torch.from_numpy(tfl_out1)
 
+        pred_class_probs, _, pred_scores, _, pred_boxes = self.resolver(pred)
+        pred_class_probs *= pred_scores
+        pred_class_ids = torch.argmax(pred_class_probs, dim=2)
+        pred_scores = torch.max(pred_class_probs, dim=2)[0]
+        dets = {'class_ids': pred_class_ids,
+            'scores': pred_scores,
+            'boxes': pred_boxes}
+        
         results = []
         batch_size = dets['class_ids'].shape[0]
         for b in range(batch_size):

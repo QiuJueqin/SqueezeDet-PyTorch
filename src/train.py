@@ -28,7 +28,7 @@ def train(cfg):
             model = load_official_model(model, cfg.load_model, cfg)
         else:
             model = load_model(model, cfg.load_model, cfg)
-
+    # qat specific
     if cfg.qat:
         model.qconfig = torch.quantization.get_default_qat_qconfig('qnnpack')
         fused_model = copy.deepcopy(model)
@@ -42,7 +42,7 @@ def train(cfg):
                                 eps=1e-08,
                                 weight_decay=cfg.weight_decay)
 
-    lr_scheduler = StepLR(optimizer, 100, gamma=0.5)
+    lr_scheduler = StepLR(optimizer, 150, gamma=0.5)
 
     trainer = Trainer(model, optimizer, lr_scheduler, cfg)
 
@@ -63,6 +63,14 @@ def train(cfg):
     better_than = operator.lt if cfg.no_eval else operator.gt
 
     for epoch in range(1, cfg.num_epochs + 1):
+        # qat specific
+        if cfg.qat:
+            if epoch == cfg.num_epochs // 3:
+                print("freeze quantizer parameters")
+                model.apply(torch.quantization.disable_observer)
+            elif epoch == cfg.num_epochs // 3 * 2:
+                print("freeze batch norm mean and variance estimates")
+                model.apply(torch.nn.intrinsic.qat.freeze_bn_stats)
         train_stats = trainer.train_epoch(epoch, train_loader, cfg=cfg)
         logger.update(train_stats, phase='train', epoch=epoch, cfg=cfg)
 

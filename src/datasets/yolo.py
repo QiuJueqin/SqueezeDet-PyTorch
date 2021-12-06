@@ -32,7 +32,7 @@ class YOLO(BaseDataset):
 
         self.data_dir = os.path.join(cfg.data_dir, 'lpr_crop/merged_data')
         self.sample_ids, self.sample_set_path = self.get_sample_ids()
-        self.grid_size = tuple(x // 16 for x in self.input_size)  # anchors grid 
+        self.grid_size = tuple(x // 8 for x in self.input_size)  # anchors grid 
         # self.anchors_seed = np.array([[ 29, 17], [46, 32], [69, 52],
         #                                 [109, 68], [84, 127], [155, 106], 
         #                                 [255, 145], [183, 215], [371, 221]], dtype=np.float32) ## real_filtered anchors
@@ -41,8 +41,8 @@ class YOLO(BaseDataset):
         #                                 [103, 66], [122, 114], [183, 96],
         #                                 [160, 152], [211, 201], [343, 205]], dtype=np.float32) ## real_filtered plus all_sites_seatbelt anchors
 
-        self.anchors_seed = np.array([[6, 5], [12, 10], [18, 10], [18, 18], [20, 24], [30, 15]], dtype=np.float32)
-
+        # self.anchors_seed = np.array([[6, 5], [12, 10], [18, 10], [18, 18], [20, 24], [30, 15]], dtype=np.float32)
+        self.anchors_seed = np.array([[3, 3], [6, 5], [9, 5], [10, 9], [10, 12], [15, 8]], dtype=np.float32)
         self.anchors = generate_anchors(self.grid_size, self.input_size, self.anchors_seed)
         self.anchors_per_grid = self.anchors_seed.shape[0]
         self.num_anchors = self.anchors.shape[0]

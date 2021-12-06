@@ -46,7 +46,7 @@ class SqueezeDetBase(nn.Module):
                 nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
                 Fire(128, 32, 128, 128),
                 Fire(256, 32, 128, 128),
-                nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True),
+                nn.MaxPool2d(kernel_size=1, stride=1, ceil_mode=True),
                 Fire(256, 48, 192, 192),
                 Fire(384, 48, 192, 192),
                 Fire(384, 64, 256, 256),
@@ -232,15 +232,13 @@ class SqueezeDet(nn.Module):
     def __init__(self, cfg):
         super(SqueezeDet, self).__init__()
         self.base = SqueezeDetBase(cfg)
-        self.resolver = PredictionResolver(cfg, log_softmax=False)
 
-    def forward(self, batch):
-        pred = self.base(batch['image'])
-        pred_class_probs, _, pred_scores, _, pred_boxes = self.resolver(pred)
-        pred_class_probs *= pred_scores
-        pred_class_ids = torch.argmax(pred_class_probs, dim=2)
-        pred_scores = torch.max(pred_class_probs, dim=2)[0]
-        det = {'class_ids': pred_class_ids,
-               'scores': pred_scores,
-               'boxes': pred_boxes}
-        return det
+    def forward(self, image):
+        pred = self.base(image)
+        return pred
+    
+    def fuse_model(self):
+        torch.quantization.fuse_modules(self.base, ['conv1', 'relu1'], inplace=True)
+        for m in self.base.features:    
+            if type(m) == Fire:
+                torch.quantization.fuse_modules(m, [['squeeze', 'activation_1'], ['expand1x1', 'activation_2'], ['expand3x3', 'activation_3']] , inplace=True)

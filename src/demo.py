@@ -47,8 +47,8 @@ def demo(cfg):
         image_meta = {'image_id': os.path.basename(path)[:-4],
                       'orig_size': np.array(image.shape, dtype=np.int32)}
 
-        image, image_meta, _, _= preprocess_func(image, image_meta)
-        image = torch.from_numpy(image.transpose(2, 0, 1)).unsqueeze(0).to(cfg.device)
+        image, _ , image_meta, _, _= preprocess_func(image, image_meta)
+        # image = torch.from_numpy(image.transpose(2, 0, 1)).unsqueeze(0).to(cfg.device)
         image_meta = {k: torch.from_numpy(v).unsqueeze(0).to(cfg.device) if isinstance(v, np.ndarray)
                       else [v] for k, v in image_meta.items()}
 
