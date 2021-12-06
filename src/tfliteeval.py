@@ -1,6 +1,7 @@
 import torch
 import torch.utils.data
 import copy
+import os
 import tensorflow as tf
 import numpy as np
 from engine.detectortflite import DetectorTflite
@@ -31,8 +32,7 @@ def eval_dataset(dataset, model, cfg):
     assert model_equivalence(model_1=model, model_2=fused_model, device='cpu', rtol=1e-03, atol=1e-06, num_tests=100, input_size=(1,3,cfg.input_size[0],cfg.input_size[1])), "Fused model is not equivalent to the original model!"
     model = torch.quantization.prepare_qat(fused_model)
     model = load_model(model, cfg.load_model, cfg)
-    tflite_path = cfg.load_model[:-4] + '.tflite'
-
+    tflite_path = os.path.join(cfg.save_dir, cfg.load_model.split('/')[-1][:-4] + '.tflite')
     h, w = cfg.input_size[0], cfg.input_size[1]
     dummy_input = torch.rand((1, 3, h, w))
     with torch.no_grad():
